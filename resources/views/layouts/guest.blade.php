@@ -6,53 +6,97 @@
     <meta name="description" content="@yield('meta_description', 'Sistem Reservasi Hotel — pesan kamar hotel terbaik dengan mudah.')">
     <title>@yield('title', 'Selamat Datang') — HotelKu</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600,700|jost:300,400,500,600&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="h-full bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+<body class="h-full" style="background-color: #1A1510;">
 
-{{-- Decorative blobs --}}
-<div class="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <div class="absolute -top-40 -right-32 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/2 -left-40 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-20 right-1/4 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl"></div>
-</div>
+{{-- Split Layout --}}
+<div class="min-h-screen flex">
 
-<div class="relative min-h-full flex flex-col items-center justify-center px-4 py-12">
+    {{-- ── Left Panel: Branding ── --}}
+    <div class="hidden lg:flex lg:w-1/2 relative flex-col items-center justify-center px-16"
+         style="background: linear-gradient(160deg, #2A1D14 0%, #1A1510 50%, #3D2B1F 100%);">
 
-    {{-- Logo --}}
-    <a href="{{ url('/') }}" class="flex items-center gap-3 mb-8 group">
-        <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-200">
-            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-            </svg>
+        {{-- Subtle texture pattern --}}
+        <div class="absolute inset-0 opacity-5"
+             style="background-image: repeating-linear-gradient(45deg, #B8935A 0, #B8935A 1px, transparent 0, transparent 50%); background-size: 20px 20px;">
         </div>
-        <span class="text-2xl font-bold text-white tracking-tight">HotelKu</span>
-    </a>
 
-    {{-- Flash Messages --}}
-    @if (session('success'))
-        <div class="w-full max-w-md mb-4 alert-success">
-            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            {{ session('success') }}
-        </div>
-    @endif
-    @if (session('error'))
-        <div class="w-full max-w-md mb-4 alert-error">
-            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            {{ session('error') }}
-        </div>
-    @endif
+        {{-- Top corner ornament --}}
+        <div class="absolute top-8 left-8 w-16 h-16 border-t border-l border-[#B8935A]/40"></div>
+        <div class="absolute bottom-8 right-8 w-16 h-16 border-b border-r border-[#B8935A]/40"></div>
 
-    {{-- Card Utama --}}
-    <div class="w-full max-w-md">
-        @yield('content')
+        <div class="relative text-center">
+            {{-- Logo --}}
+            <div class="flex items-center justify-center gap-3 mb-10">
+                <div class="w-px h-8 bg-[#B8935A]/60"></div>
+                <p class="text-[#B8935A] text-xs tracking-[0.4em] uppercase font-medium">Luxury Collection</p>
+                <div class="w-px h-8 bg-[#B8935A]/60"></div>
+            </div>
+
+            <h1 class="text-6xl font-light text-white mb-2" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.05em;">
+                Hotel<span class="italic text-[#D4B896]">Ku</span>
+            </h1>
+            <div class="w-16 h-px bg-[#B8935A] mx-auto my-6"></div>
+            <p class="text-[#A89880] text-sm tracking-widest uppercase font-light">
+                Where Elegance Meets Comfort
+            </p>
+
+            {{-- Feature list --}}
+            <div class="mt-16 space-y-5 text-left">
+                @foreach([
+                    ['★', 'Kamar Premium', 'Dirancang untuk kenyamanan tertinggi'],
+                    ['◈', 'Reservasi Mudah', 'Proses pemesanan cepat dan aman'],
+                    ['◇', 'Layanan 24 Jam', 'Kami selalu siap melayani Anda'],
+                ] as $item)
+                <div class="flex items-start gap-4">
+                    <span class="text-[#B8935A] text-lg mt-0.5">{{ $item[0] }}</span>
+                    <div>
+                        <p class="text-white text-sm font-medium">{{ $item[1] }}</p>
+                        <p class="text-[#705F4A] text-xs mt-0.5">{{ $item[2] }}</p>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
     </div>
 
-    {{-- Footer --}}
-    <p class="mt-8 text-slate-500 text-xs">
-        &copy; {{ date('Y') }} HotelKu. Seluruh hak cipta dilindungi.
-    </p>
+    {{-- ── Right Panel: Form ── --}}
+    <div class="flex-1 flex flex-col items-center justify-center px-6 py-12 lg:px-16"
+         style="background-color: #F7F4EE;">
+
+        {{-- Mobile Logo --}}
+        <div class="lg:hidden text-center mb-10">
+            <h1 class="text-4xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.05em;">
+                Hotel<span class="italic text-[#B8935A]">Ku</span>
+            </h1>
+            <div class="w-10 h-px bg-[#B8935A] mx-auto mt-3"></div>
+        </div>
+
+        {{-- Flash Messages --}}
+        @if (session('success'))
+            <div class="w-full max-w-md mb-6 alert-success">
+                <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="w-full max-w-md mb-6 alert-error">
+                <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                {{ session('error') }}
+            </div>
+        @endif
+
+        {{-- Content --}}
+        <div class="w-full max-w-md">
+            @yield('content')
+        </div>
+
+        <p class="mt-10 text-[#A89880] text-xs tracking-widest uppercase">
+            &copy; {{ date('Y') }} HotelKu · All Rights Reserved
+        </p>
+    </div>
 </div>
 
 </body>

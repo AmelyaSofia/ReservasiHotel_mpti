@@ -5,70 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Beranda') — HotelKu</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600,700|jost:300,400,500,600&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="h-full bg-slate-50">
+<body class="h-full" style="background-color: #F7F4EE;">
 
-{{-- ══════════════════════════════════════════════════════════ NAVBAR ══ --}}
-<nav class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/70 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
+{{-- ═══════════════════════════════════════════ NAVBAR ══ --}}
+<nav class="sticky top-0 z-40 bg-white border-b border-[#EDE8DC]">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div class="flex items-center justify-between h-18 py-4">
 
             {{-- Logo --}}
-            <a href="{{ route('customer.dashboard') }}" class="flex items-center gap-2.5 group">
-                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm shadow-blue-600/30 group-hover:scale-105 transition-transform duration-200">
-                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                    </svg>
+            <a href="{{ route('customer.dashboard') }}" class="flex items-center gap-3 group">
+                <div class="flex items-center gap-2">
+                    <div class="w-px h-6 bg-[#B8935A] group-hover:h-8 transition-all duration-300"></div>
+                    <div>
+                        <h2 class="text-2xl font-light text-[#2A1D14] leading-none"
+                            style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.05em;">
+                            Hotel<em class="text-[#B8935A]">Ku</em>
+                        </h2>
+                        <p class="text-[#A89880] text-xs tracking-[0.2em] uppercase leading-none mt-0.5">Luxury Collection</p>
+                    </div>
                 </div>
-                <span class="text-lg font-bold text-slate-800">HotelKu</span>
             </a>
 
             {{-- Nav Links --}}
             <div class="hidden md:flex items-center gap-1">
-                <a href="{{ route('customer.dashboard') }}"
-                   class="px-4 py-2 rounded-xl text-sm font-medium transition-colors
-                          {{ request()->routeIs('customer.dashboard') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
-                    Beranda
+                @php
+                    $navLinks = [
+                        ['route' => 'customer.dashboard',          'label' => 'Beranda',       'pattern' => 'customer.dashboard'],
+                        ['route' => 'customer.catalog.index',      'label' => 'Kamar',         'pattern' => 'customer.catalog.*'],
+                        ['route' => 'customer.reservations.index', 'label' => 'Reservasi Saya','pattern' => 'customer.reservations.*'],
+                    ];
+                @endphp
+                @foreach($navLinks as $link)
+                <a href="{{ route($link['route']) }}"
+                   class="relative px-4 py-2 text-sm tracking-widest uppercase transition-colors duration-200 group
+                          {{ request()->routeIs($link['pattern'])
+                                ? 'text-[#B8935A]'
+                                : 'text-[#8C7B65] hover:text-[#2A1D14]' }}">
+                    {{ $link['label'] }}
+                    <span class="absolute bottom-0 left-4 right-4 h-px bg-[#B8935A] transition-transform duration-200 origin-left
+                                 {{ request()->routeIs($link['pattern']) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }}">
+                    </span>
                 </a>
-                <a href="{{ route('customer.catalog.index') }}"
-                   class="px-4 py-2 rounded-xl text-sm font-medium transition-colors
-                          {{ request()->routeIs('customer.catalog.*') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
-                    Cari Kamar
-                </a>
-                <a href="{{ route('customer.reservations.index') }}"
-                   class="px-4 py-2 rounded-xl text-sm font-medium transition-colors
-                          {{ request()->routeIs('customer.reservations.*') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
-                    Reservasi Saya
-                </a>
+                @endforeach
             </div>
 
-            {{-- User Menu --}}
-            <div class="flex items-center gap-3">
-                <div class="hidden md:flex flex-col items-end">
-                    <p class="text-sm font-semibold text-slate-800">{{ auth()->user()->name }}</p>
-                    <p class="text-xs text-slate-400">Pelanggan</p>
+            {{-- User --}}
+            <div class="flex items-center gap-4">
+                <div class="hidden md:block text-right">
+                    <p class="text-xs font-medium text-[#2A1D14]">{{ auth()->user()->name }}</p>
+                    <p class="text-xs text-[#A89880] tracking-wider">Pelanggan</p>
                 </div>
-                <div class="w-9 h-9 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                <div class="w-9 h-9 flex items-center justify-center text-white text-xs font-semibold"
+                     style="background-color: #B8935A;">
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </div>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" class="hidden md:block">
                     @csrf
                     <button type="submit"
-                        class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium
-                               text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors border border-slate-200">
-                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                        </svg>
+                        class="text-xs text-[#A89880] hover:text-[#5C4033] tracking-widest uppercase transition-colors border-b border-transparent hover:border-[#5C4033] pb-px">
                         Keluar
                     </button>
                 </form>
 
-                {{-- Mobile Menu Toggle --}}
+                {{-- Mobile --}}
                 <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')"
-                    class="md:hidden p-2 rounded-xl text-slate-500 hover:bg-slate-100">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    class="md:hidden p-1.5 text-[#8C7B65]">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                 </button>
@@ -76,13 +81,13 @@
         </div>
 
         {{-- Mobile Menu --}}
-        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 py-3 space-y-1">
-            <a href="{{ route('customer.dashboard') }}" class="block px-4 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-100">Beranda</a>
-            <a href="{{ route('customer.catalog.index') }}" class="block px-4 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-100">Cari Kamar</a>
-            <a href="{{ route('customer.reservations.index') }}" class="block px-4 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-100">Reservasi Saya</a>
-            <form method="POST" action="{{ route('logout') }}" class="px-4 pt-2">
+        <div id="mobileMenu" class="hidden md:hidden border-t border-[#EDE8DC] py-4 space-y-1">
+            <a href="{{ route('customer.dashboard') }}" class="block px-2 py-2.5 text-sm text-[#5C4033] tracking-widest uppercase hover:text-[#B8935A] transition-colors">Beranda</a>
+            <a href="{{ route('customer.catalog.index') }}" class="block px-2 py-2.5 text-sm text-[#5C4033] tracking-widest uppercase hover:text-[#B8935A] transition-colors">Kamar</a>
+            <a href="{{ route('customer.reservations.index') }}" class="block px-2 py-2.5 text-sm text-[#5C4033] tracking-widest uppercase hover:text-[#B8935A] transition-colors">Reservasi Saya</a>
+            <form method="POST" action="{{ route('logout') }}" class="pt-2 border-t border-[#EDE8DC] mt-2">
                 @csrf
-                <button type="submit" class="text-sm text-red-600 font-medium">Keluar</button>
+                <button type="submit" class="text-sm text-[#8C7B65] tracking-widest uppercase">Keluar</button>
             </form>
         </div>
     </div>
@@ -90,38 +95,40 @@
 
 {{-- Flash Messages --}}
 @if (session('success') || session('error'))
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 space-y-3">
+<div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-5 space-y-3">
     @if (session('success'))
         <div class="alert-success">
-            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
             {{ session('success') }}
         </div>
     @endif
     @if (session('error'))
         <div class="alert-error">
-            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             {{ session('error') }}
         </div>
     @endif
 </div>
 @endif
 
-{{-- Page Content --}}
-<main class="@yield('full_width', '') max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<main class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-10">
     @yield('content')
 </main>
 
-<footer class="mt-16 border-t border-slate-200 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div class="flex items-center gap-2">
-            <div class="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
-                <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                </svg>
+<footer style="background-color: #2A1D14;" class="mt-16">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-10">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+                <h3 class="text-2xl font-light text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.05em;">
+                    Hotel<em class="text-[#D4B896]">Ku</em>
+                </h3>
+                <p class="text-[#705F4A] text-xs tracking-widest uppercase mt-1">Luxury Collection</p>
             </div>
-            <span class="font-bold text-slate-800">HotelKu</span>
+            <div class="w-8 h-px bg-[#B8935A]"></div>
+            <p class="text-[#705F4A] text-xs tracking-widest uppercase">
+                &copy; {{ date('Y') }} HotelKu · Seluruh hak dilindungi
+            </p>
         </div>
-        <p class="text-sm text-slate-400">&copy; {{ date('Y') }} HotelKu. Semua hak dilindungi.</p>
     </div>
 </footer>
 

@@ -4,112 +4,108 @@
 
 @section('content')
 
-{{-- ══════════════════════════════════════════ HERO / GREETING ════ --}}
-<div class="relative bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 rounded-3xl overflow-hidden mb-8 p-8 md:p-10">
+{{-- ════════════════════════════════════════ HERO GREETING ════ --}}
+<div class="relative overflow-hidden mb-10" style="background: linear-gradient(135deg, #2A1D14 0%, #3D2B1F 50%, #1A1510 100%);">
 
-    {{-- Decorative circles --}}
-    <div class="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-    <div class="absolute -bottom-8 -left-8 w-36 h-36 bg-white/5 rounded-full blur-xl pointer-events-none"></div>
+    {{-- Ornament pattern --}}
+    <div class="absolute inset-0 opacity-5"
+         style="background-image: repeating-linear-gradient(45deg, #B8935A 0, #B8935A 1px, transparent 0, transparent 50%); background-size: 24px 24px;">
+    </div>
 
-    <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    {{-- Corner ornaments --}}
+    <div class="absolute top-5 left-5 w-10 h-10 border-t border-l border-[#B8935A]/40 hidden sm:block"></div>
+    <div class="absolute bottom-5 right-5 w-10 h-10 border-b border-r border-[#B8935A]/40 hidden sm:block"></div>
+
+    <div class="relative px-8 sm:px-12 py-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div>
-            <div class="inline-flex items-center gap-2 bg-white/20 rounded-full px-3 py-1 mb-3">
-                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-                <span class="text-white/90 text-xs font-medium">Portal Pelanggan</span>
-            </div>
-            <h1 class="text-2xl md:text-3xl font-bold text-white leading-tight">
-                Halo, {{ auth()->user()->name }}! 👋
+            <p class="text-xs text-[#B8935A] tracking-[0.3em] uppercase mb-3">Selamat Datang</p>
+            <h1 class="text-4xl sm:text-5xl font-light text-white leading-tight" style="font-family: 'Cormorant Garamond', serif;">
+                {{ auth()->user()->name }}
             </h1>
-            <p class="text-blue-100 mt-2 text-sm md:text-base">
-                Temukan kamar terbaik dan buat reservasi dengan mudah.
+            <div class="w-10 h-px bg-[#B8935A] my-4"></div>
+            <p class="text-[#A89880] text-sm tracking-wide">
+                Nikmati pengalaman menginap yang tak terlupakan bersama kami
             </p>
         </div>
         <a href="{{ route('customer.catalog.index') }}"
-            class="shrink-0 inline-flex items-center gap-2 bg-white text-blue-700 font-semibold text-sm px-6 py-3 rounded-2xl shadow-lg shadow-blue-900/30 hover:bg-blue-50 active:scale-95 transition-all duration-200">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-            Cari Kamar
+            class="btn-ghost-light shrink-0 text-xs">
+            Lihat Kamar
         </a>
     </div>
 </div>
 
-{{-- ══════════════════════════════════════════════ STAT CARDS ════ --}}
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-
-    <div class="card p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
-        <p class="text-3xl font-bold text-slate-800">{{ $stats['total'] }}</p>
-        <p class="text-xs text-slate-400 font-medium mt-1 uppercase tracking-wide">Total Reservasi</p>
+{{-- ══════════════════════════════════════════ STAT CARDS ════ --}}
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+    @php
+        $statCards = [
+            ['label' => 'Total Reservasi', 'value' => $stats['total'],     'color' => '#2A1D14'],
+            ['label' => 'Menunggu',        'value' => $stats['pending'],   'color' => '#B8935A'],
+            ['label' => 'Dikonfirmasi',    'value' => $stats['confirmed'], 'color' => '#5C4033'],
+            ['label' => 'Selesai',         'value' => $stats['completed'], 'color' => '#3D2B1F'],
+        ];
+    @endphp
+    @foreach($statCards as $sc)
+    <div class="card-luxury p-5 text-center hover:border-[#C9A96E] transition-colors duration-300">
+        <p class="text-4xl font-light" style="font-family: 'Cormorant Garamond', serif; color: {{ $sc['color'] }};">
+            {{ $sc['value'] }}
+        </p>
+        <div class="w-6 h-px bg-[#B8935A] mx-auto my-2"></div>
+        <p class="text-xs text-[#A89880] tracking-widest uppercase">{{ $sc['label'] }}</p>
     </div>
-
-    <div class="card p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
-        <p class="text-3xl font-bold text-amber-500">{{ $stats['pending'] }}</p>
-        <p class="text-xs text-slate-400 font-medium mt-1 uppercase tracking-wide">Menunggu</p>
-    </div>
-
-    <div class="card p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
-        <p class="text-3xl font-bold text-blue-600">{{ $stats['confirmed'] }}</p>
-        <p class="text-xs text-slate-400 font-medium mt-1 uppercase tracking-wide">Dikonfirmasi</p>
-    </div>
-
-    <div class="card p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
-        <p class="text-3xl font-bold text-emerald-600">{{ $stats['completed'] }}</p>
-        <p class="text-xs text-slate-400 font-medium mt-1 uppercase tracking-wide">Selesai</p>
-    </div>
+    @endforeach
 </div>
 
-{{-- ════════════════════════════════ RESERVASI TERBARU + CTA ════ --}}
+{{-- ═══════════════════ RESERVASI TERBARU + SIDEBAR ════ --}}
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
     {{-- Reservasi Terbaru --}}
-    <div class="lg:col-span-2 card overflow-hidden">
-        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-            <h2 class="font-semibold text-slate-800">Reservasi Terbaru</h2>
+    <div class="lg:col-span-2 card-luxury overflow-hidden">
+        <div class="flex items-end justify-between px-6 py-5 border-b border-[#EDE8DC]">
+            <div>
+                <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-1">Aktivitas</p>
+                <h2 class="text-xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">
+                    Reservasi Terbaru
+                </h2>
+            </div>
             <a href="{{ route('customer.reservations.index') }}"
-                class="text-xs font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors">
+                class="text-xs text-[#B8935A] tracking-widest uppercase hover:text-[#9E7A42] flex items-center gap-1.5 transition-colors">
                 Lihat semua
-                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
+                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
         </div>
 
         @if($reservasiTerbaru->isEmpty())
             {{-- Empty State --}}
-            <div class="flex flex-col items-center justify-center py-16 text-slate-400">
-                <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mb-4">
-                    <svg class="w-8 h-8 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                </div>
-                <p class="text-sm font-medium text-slate-500">Belum ada reservasi</p>
-                <p class="text-xs text-slate-400 mt-1">Mulai pesan kamar pertama Anda sekarang</p>
-                <a href="{{ route('customer.catalog.index') }}" class="btn-primary mt-4 text-sm">
+            <div class="flex flex-col items-center justify-center py-20">
+                <div class="w-10 h-px bg-[#DDD5C5] mb-8"></div>
+                <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-2">Belum Ada Reservasi</p>
+                <p class="text-sm text-[#8C7B65] mb-8 text-center max-w-xs">
+                    Mulailah pengalaman menginap Anda yang pertama bersama HotelKu
+                </p>
+                <a href="{{ route('customer.catalog.index') }}" class="btn-primary text-xs px-8 py-3">
                     Jelajahi Kamar
                 </a>
+                <div class="w-10 h-px bg-[#DDD5C5] mt-8"></div>
             </div>
         @else
-            <div class="divide-y divide-slate-100">
-                @foreach($reservasiTerbaru as $reservasi)
-                <div class="flex items-center gap-4 px-6 py-4 hover:bg-slate-50/60 transition-colors">
-                    {{-- Icon --}}
-                    <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
-                        </svg>
+            <div>
+                @foreach($reservasiTerbaru as $i => $reservasi)
+                <div class="flex items-center gap-5 px-6 py-4 border-b border-[#EDE8DC] last:border-0 hover:bg-[#FDFCF8] transition-colors group">
+
+                    {{-- Number --}}
+                    <div class="w-7 h-7 flex items-center justify-center text-xs font-medium text-[#A89880] border border-[#EDE8DC] shrink-0">
+                        {{ $i + 1 }}
                     </div>
 
                     {{-- Info --}}
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-2 flex-wrap">
-                            <p class="text-sm font-semibold text-slate-800">
-                                Kamar {{ $reservasi->room->room_number }}
-                            </p>
-                            <span class="text-slate-300">·</span>
-                            <p class="text-xs text-slate-500">{{ $reservasi->room->roomType->name }}</p>
+                            <p class="text-sm font-medium text-[#2A1D14]">Kamar {{ $reservasi->room->room_number }}</p>
+                            <span class="text-[#DDD5C5]">·</span>
+                            <p class="text-xs text-[#A89880]">{{ $reservasi->room->roomType->name }}</p>
                         </div>
-                        <p class="text-xs text-slate-400 mt-0.5">
-                            {{ $reservasi->check_in_date->format('d M') }} –
+                        <p class="text-xs text-[#A89880] mt-0.5 tracking-wide">
+                            {{ $reservasi->check_in_date->format('d M') }} —
                             {{ $reservasi->check_out_date->format('d M Y') }}
                             · {{ $reservasi->nights }} malam
                         </p>
@@ -118,76 +114,81 @@
                     {{-- Right --}}
                     <div class="text-right shrink-0">
                         @php
-                            $badges = [
-                                'pending'   => 'badge-pending',
-                                'confirmed' => 'badge-confirmed',
-                                'completed' => 'badge-completed',
-                                'cancelled' => 'badge-cancelled',
-                            ];
-                            $labels = [
-                                'pending'   => 'Pending',
-                                'confirmed' => 'Dikonfirmasi',
-                                'completed' => 'Selesai',
-                                'cancelled' => 'Dibatalkan',
-                            ];
+                            $bm = ['pending'=>'badge-pending','confirmed'=>'badge-confirmed','completed'=>'badge-completed','cancelled'=>'badge-cancelled'];
+                            $lm = ['pending'=>'Pending','confirmed'=>'Dikonfirmasi','completed'=>'Selesai','cancelled'=>'Dibatalkan'];
                         @endphp
-                        <span class="badge {{ $badges[$reservasi->status] ?? '' }}">
-                            {{ $labels[$reservasi->status] ?? $reservasi->status }}
+                        <span class="badge {{ $bm[$reservasi->status] ?? '' }}">
+                            {{ $lm[$reservasi->status] ?? $reservasi->status }}
                         </span>
-                        <p class="text-xs font-semibold text-slate-700 mt-1">
+                        <p class="text-xs font-medium text-[#2A1D14] mt-1.5">
                             Rp {{ number_format($reservasi->total_price, 0, ',', '.') }}
                         </p>
                     </div>
+
+                    {{-- Arrow --}}
+                    <a href="{{ route('customer.reservations.show', $reservasi) }}"
+                       class="opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                        <svg class="w-4 h-4 text-[#B8935A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
                 @endforeach
             </div>
         @endif
     </div>
 
-    {{-- Sidebar: Info + Bantuan --}}
+    {{-- Sidebar --}}
     <div class="space-y-5">
 
-        {{-- Info Akun --}}
-        <div class="card p-5">
-            <h3 class="text-sm font-semibold text-slate-700 mb-4">Profil Saya</h3>
-            <div class="flex items-center gap-3 mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center text-white text-xl font-bold shadow-sm">
+        {{-- Profil --}}
+        <div class="card-luxury p-6">
+            <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-4">Profil Saya</p>
+
+            <div class="flex flex-col items-center text-center mb-5">
+                <div class="w-14 h-14 flex items-center justify-center text-white text-2xl font-light mb-3"
+                     style="font-family: 'Cormorant Garamond', serif; background-color: #B8935A;">
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </div>
-                <div>
-                    <p class="font-semibold text-slate-800">{{ auth()->user()->name }}</p>
-                    <p class="text-xs text-slate-400">{{ auth()->user()->email }}</p>
-                </div>
+                <p class="font-medium text-[#2A1D14] text-sm">{{ auth()->user()->name }}</p>
+                <p class="text-xs text-[#A89880] mt-0.5">{{ auth()->user()->email }}</p>
             </div>
-            <div class="flex items-center gap-2 bg-emerald-50 rounded-xl px-3 py-2">
-                <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
-                <span class="text-xs text-emerald-700 font-medium">Akun aktif · Pelanggan</span>
+
+            <div class="border-t border-[#EDE8DC] pt-4">
+                <div class="flex items-center justify-center gap-2">
+                    <div class="w-1.5 h-1.5 bg-[#B8935A]"></div>
+                    <p class="text-xs text-[#8C7B65] tracking-widest uppercase">Pelanggan Aktif</p>
+                </div>
             </div>
         </div>
 
-        {{-- Panduan Reservasi --}}
-        <div class="card p-5">
-            <h3 class="text-sm font-semibold text-slate-700 mb-4">Cara Reservasi</h3>
-            <ol class="space-y-3">
-                @foreach([
-                    ['icon' => 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z', 'title' => 'Cari Kamar', 'desc' => 'Jelajahi katalog kamar tersedia'],
-                    ['icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', 'title' => 'Pilih Tanggal', 'desc' => 'Tentukan check-in & check-out'],
-                    ['icon' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', 'title' => 'Konfirmasi', 'desc' => 'Tunggu persetujuan admin'],
-                ] as $i => $step)
-                <li class="flex items-start gap-3">
-                    <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-                        <span class="text-xs font-bold text-blue-600">{{ $i + 1 }}</span>
-                    </div>
-                    <div>
-                        <p class="text-sm font-medium text-slate-700">{{ $step['title'] }}</p>
-                        <p class="text-xs text-slate-400">{{ $step['desc'] }}</p>
-                    </div>
-                </li>
-                @endforeach
-            </ol>
+        {{-- Panduan --}}
+        <div class="card-luxury p-6">
+            <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-4">Panduan</p>
+            <h3 class="text-lg font-light text-[#2A1D14] mb-5" style="font-family: 'Cormorant Garamond', serif;">
+                Cara Reservasi
+            </h3>
 
-            <a href="{{ route('customer.catalog.index') }}"
-                class="btn-primary w-full mt-5 text-sm justify-center">
+            <div class="space-y-5">
+                @foreach([
+                    ['num' => 'I',   'title' => 'Pilih Kamar',    'desc' => 'Jelajahi koleksi kamar premium kami'],
+                    ['num' => 'II',  'title' => 'Atur Tanggal',   'desc' => 'Tentukan jadwal check-in & check-out'],
+                    ['num' => 'III', 'title' => 'Konfirmasi',     'desc' => 'Admin akan memverifikasi dalam 1×24 jam'],
+                ] as $step)
+                <div class="flex items-start gap-4">
+                    <div class="text-xs font-light text-[#B8935A] w-6 shrink-0 mt-0.5"
+                         style="font-family: 'Cormorant Garamond', serif;">
+                        {{ $step['num'] }}
+                    </div>
+                    <div class="flex-1 border-l border-[#EDE8DC] pl-4">
+                        <p class="text-sm font-medium text-[#2A1D14]">{{ $step['title'] }}</p>
+                        <p class="text-xs text-[#A89880] mt-0.5">{{ $step['desc'] }}</p>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
+            <a href="{{ route('customer.catalog.index') }}" class="btn-primary w-full mt-6 text-xs py-3 justify-center">
                 Mulai Reservasi
             </a>
         </div>
