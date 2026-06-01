@@ -1,13 +1,13 @@
 @extends('layouts.guest')
 
 @section('title', 'Masuk')
-@section('meta_description', 'Masuk ke akun HotelKu Anda.')
+@section('meta_description', 'Masuk ke akun Royal Crown Hotel Anda.')
 
 @section('content')
 
 {{-- Header --}}
 <div class="mb-10">
-    <p class="text-xs text-[#B8935A] tracking-[0.3em] uppercase mb-3">Selamat Datang Kembali</p>
+    <p class="text-sm text-[#B8935A] tracking-[0.3em] uppercase mb-3">Selamat Datang Kembali</p>
     <h2 class="text-4xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">
         Masuk ke Akun
     </h2>
@@ -63,8 +63,8 @@
     {{-- Remember --}}
     <div class="flex items-center gap-3">
         <input id="remember" name="remember" type="checkbox"
-            class="w-3.5 h-3.5 border-[#DDD5C5] text-[#B8935A] focus:ring-[#B8935A] rounded-none">
-        <label for="remember" class="text-xs text-[#8C7B65] tracking-wide">Ingat saya</label>
+            class="w-4 h-4 border-[#DDD5C5] text-[#B8935A] focus:ring-[#B8935A] rounded-none">
+        <label for="remember" class="text-sm text-[#8C7B65] tracking-wide">Ingat saya</label>
     </div>
 
     {{-- Submit --}}
@@ -79,29 +79,14 @@
 </div>
 
 {{-- Register Link --}}
-<p class="text-center text-sm text-[#8C7B65]">
+<p class="text-center text-base text-[#8C7B65]">
     Belum memiliki akun?
-    <a href="{{ route('register') }}" class="text-[#2A1D14] font-medium hover:text-[#B8935A] underline underline-offset-4 transition-colors ml-1">
+    <a href="{{ route('register') }}" class="text-[#2A1D14] font-semibold hover:text-[#B8935A] underline underline-offset-4 transition-colors ml-1">
         Daftar Sekarang
     </a>
 </p>
 
-{{-- Demo Credentials --}}
-<div class="mt-8 p-5 border border-[#EDE8DC] bg-[#FDFCF8]">
-    <p class="text-xs text-[#B8935A] tracking-widest uppercase text-center mb-3">Akun Demo</p>
-    <div class="grid grid-cols-2 gap-3 text-xs text-[#705F4A]">
-        <div class="border-l-2 border-[#B8935A] pl-3">
-            <p class="font-semibold text-[#2A1D14] mb-1">Admin</p>
-            <p>admin@hotel.com</p>
-            <p class="text-[#A89880]">admin123</p>
-        </div>
-        <div class="border-l-2 border-[#DDD5C5] pl-3">
-            <p class="font-semibold text-[#2A1D14] mb-1">Pelanggan</p>
-            <p>Daftar sendiri</p>
-            <p class="text-[#A89880]">Min. 8 karakter</p>
-        </div>
-    </div>
-</div>
+
 
 <script>
 function togglePass(id) {

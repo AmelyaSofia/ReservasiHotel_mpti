@@ -79,8 +79,8 @@
             <div class="flex flex-col items-center justify-center py-20">
                 <div class="w-10 h-px bg-[#DDD5C5] mb-8"></div>
                 <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-2">Belum Ada Reservasi</p>
-                <p class="text-sm text-[#8C7B65] mb-8 text-center max-w-xs">
-                    Mulailah pengalaman menginap Anda yang pertama bersama HotelKu
+                <p class="text-base text-[#8C7B65] mb-8 text-center max-w-xs">
+                    Mulailah pengalaman menginap Anda yang pertama bersama Royal Crown Hotel
                 </p>
                 <a href="{{ route('customer.catalog.index') }}" class="btn-primary text-xs px-8 py-3">
                     Jelajahi Kamar

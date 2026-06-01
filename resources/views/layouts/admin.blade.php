@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Panel Admin') — HotelKu</title>
+    <title>@yield('title', 'Panel Admin') — Royal Crown Hotel</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600,700|jost:300,400,500,600&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -21,86 +21,86 @@
     <div class="px-6 py-7 border-b" style="border-color: rgba(184, 147, 90, 0.2);">
         <div class="flex items-center gap-2 mb-1">
             <div class="w-px h-5 bg-[#B8935A]"></div>
-            <p class="text-[#B8935A] text-xs tracking-[0.3em] uppercase font-medium">Luxury Collection</p>
+            <p class="text-[#B8935A] text-sm tracking-[0.3em] uppercase font-medium">Luxury Collection</p>
         </div>
         <h2 class="text-2xl font-light text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.05em;">
-            Hotel<em class="text-[#D4B896]">Ku</em>
+            Royal Crown <em class="text-[#D4B896]">Hotel</em>
         </h2>
-        <p class="text-[#705F4A] text-xs mt-1 tracking-wider">Panel Administrasi</p>
+        <p class="text-[#705F4A] text-sm mt-1 tracking-wider">Panel Administrasi</p>
     </div>
 
     {{-- Nav --}}
     <nav class="flex-1 py-6 overflow-y-auto">
-        <div class="px-6 mb-3">
-            <p class="text-[#705F4A] text-xs tracking-[0.2em] uppercase font-medium">Utama</p>
+        <div class="px-6 mb-4">
+            <p class="text-[#705F4A] text-sm tracking-[0.2em] uppercase font-semibold">Utama</p>
         </div>
 
         <a href="{{ route('admin.dashboard') }}"
            class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-            <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
             </svg>
-            Dashboard
+            <span class="text-sm">Dashboard</span>
         </a>
 
-        <div class="px-6 mt-6 mb-3">
-            <p class="text-[#705F4A] text-xs tracking-[0.2em] uppercase font-medium">Master Data</p>
+        <div class="px-6 mt-6 mb-4">
+            <p class="text-[#705F4A] text-sm tracking-[0.2em] uppercase font-semibold">Master Data</p>
         </div>
 
         <a href="{{ route('admin.room-types.index') }}"
            class="sidebar-link {{ request()->routeIs('admin.room-types.*') ? 'active' : '' }}">
-            <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
             </svg>
-            Tipe Kamar
+            <span class="text-sm">Tipe Kamar</span>
         </a>
 
         <a href="{{ route('admin.rooms.index') }}"
            class="sidebar-link {{ request()->routeIs('admin.rooms.*') ? 'active' : '' }}">
-            <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
             </svg>
-            Kamar
+            <span class="text-sm">Kamar</span>
         </a>
 
         <a href="{{ route('admin.facilities.index') }}"
            class="sidebar-link {{ request()->routeIs('admin.facilities.*') ? 'active' : '' }}">
-            <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
             </svg>
-            Fasilitas
+            <span class="text-sm">Fasilitas</span>
         </a>
 
-        <div class="px-6 mt-6 mb-3">
-            <p class="text-[#705F4A] text-xs tracking-[0.2em] uppercase font-medium">Transaksi</p>
+        <div class="px-6 mt-6 mb-4">
+            <p class="text-[#705F4A] text-sm tracking-[0.2em] uppercase font-semibold">Transaksi</p>
         </div>
 
         <a href="{{ route('admin.reservations.index') }}"
            class="sidebar-link {{ request()->routeIs('admin.reservations.*') ? 'active' : '' }}">
-            <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
             </svg>
-            Reservasi
+            <span class="text-sm">Reservasi</span>
         </a>
     </nav>
 
     {{-- User + Logout --}}
     <div class="px-5 py-5 border-t" style="border-color: rgba(184,147,90,0.15);">
         <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-8 flex items-center justify-center text-white text-sm font-semibold shrink-0"
+            <div class="w-10 h-10 flex items-center justify-center text-white text-base font-semibold shrink-0"
                  style="background-color: #B8935A;">
                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
             </div>
             <div class="flex-1 min-w-0">
-                <p class="text-white text-xs font-medium truncate">{{ auth()->user()->name }}</p>
-                <p class="text-[#705F4A] text-xs truncate">Administrator</p>
+                <p class="text-white text-sm font-semibold truncate">{{ auth()->user()->name }}</p>
+                <p class="text-[#A89880] text-xs tracking-wider truncate">Administrator</p>
             </div>
         </div>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit"
-                class="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-[#8C7B65] hover:text-[#D4B896] tracking-widest uppercase transition-colors">
-                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                class="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-[#8C7B65] hover:text-[#D4B896] tracking-widest uppercase transition-colors">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                 </svg>
                 Keluar
@@ -127,18 +127,18 @@
         </button>
 
         <div class="flex-1">
-            <h1 class="text-xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
+            <h1 class="text-2xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
                 @yield('page_title', 'Dashboard')
             </h1>
             @hasSection('breadcrumb')
-            <p class="text-xs text-[#A89880] tracking-wide mt-0.5">@yield('breadcrumb')</p>
+            <p class="text-sm text-[#A89880] tracking-wide mt-0.5">@yield('breadcrumb')</p>
             @endif
         </div>
 
         <div class="flex items-center gap-3">
             <div class="hidden sm:block text-right">
-                <p class="text-xs font-medium text-[#2A1D14]">{{ auth()->user()->name }}</p>
-                <p class="text-xs text-[#A89880]">Admin</p>
+                <p class="text-sm font-semibold text-[#2A1D14]">{{ auth()->user()->name }}</p>
+                <p class="text-xs text-[#A89880] tracking-wider">Admin</p>
             </div>
             <div class="w-8 h-8 flex items-center justify-center text-white text-xs font-semibold"
                  style="background-color: #B8935A;">
@@ -168,8 +168,8 @@
     </main>
 
     <footer class="px-8 py-4 border-t border-[#EDE8DC]">
-        <p class="text-xs text-[#A89880] tracking-widest uppercase text-center">
-            &copy; {{ date('Y') }} HotelKu · Panel Administrasi
+        <p class="text-sm text-[#A89880] tracking-widest uppercase text-center">
+            &copy; {{ date('Y') }} Royal Crown Hotel · Panel Administrasi
         </p>
     </footer>
 </div>

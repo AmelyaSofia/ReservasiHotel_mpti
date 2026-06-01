@@ -1,7 +1,7 @@
 @extends('layouts.guest')
 
 @section('title', 'Daftar Akun')
-@section('meta_description', 'Daftar akun HotelKu untuk mulai memesan kamar hotel terbaik.')
+@section('meta_description', 'Daftar akun Royal Crown Hotel untuk mulai memesan kamar hotel terbaik.')
 
 @section('content')
 

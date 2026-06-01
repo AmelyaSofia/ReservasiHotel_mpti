@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Beranda') — HotelKu</title>
+    <title>@yield('title', 'Beranda') — Royal Crown Hotel</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600,700|jost:300,400,500,600&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -22,9 +22,9 @@
                     <div>
                         <h2 class="text-2xl font-light text-[#2A1D14] leading-none"
                             style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.05em;">
-                            Hotel<em class="text-[#B8935A]">Ku</em>
+                            Royal Crown <em class="text-[#B8935A]">Hotel</em>
                         </h2>
-                        <p class="text-[#A89880] text-xs tracking-[0.2em] uppercase leading-none mt-0.5">Luxury Collection</p>
+                        <p class="text-[#A89880] text-sm tracking-[0.2em] uppercase leading-none mt-0.5">Luxury Collection</p>
                     </div>
                 </div>
             </a>
@@ -55,17 +55,17 @@
             {{-- User --}}
             <div class="flex items-center gap-4">
                 <div class="hidden md:block text-right">
-                    <p class="text-xs font-medium text-[#2A1D14]">{{ auth()->user()->name }}</p>
+                    <p class="text-sm font-semibold text-[#2A1D14]">{{ auth()->user()->name }}</p>
                     <p class="text-xs text-[#A89880] tracking-wider">Pelanggan</p>
                 </div>
-                <div class="w-9 h-9 flex items-center justify-center text-white text-xs font-semibold"
+                <div class="w-10 h-10 flex items-center justify-center text-white text-sm font-semibold"
                      style="background-color: #B8935A;">
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </div>
                 <form method="POST" action="{{ route('logout') }}" class="hidden md:block">
                     @csrf
                     <button type="submit"
-                        class="text-xs text-[#A89880] hover:text-[#5C4033] tracking-widest uppercase transition-colors border-b border-transparent hover:border-[#5C4033] pb-px">
+                        class="text-sm text-[#A89880] hover:text-[#5C4033] tracking-widest uppercase transition-colors border-b border-transparent hover:border-[#5C4033] pb-px">
                         Keluar
                     </button>
                 </form>
@@ -120,13 +120,13 @@
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
                 <h3 class="text-2xl font-light text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.05em;">
-                    Hotel<em class="text-[#D4B896]">Ku</em>
+                    Royal Crown <em class="text-[#D4B896]">Hotel</em>
                 </h3>
-                <p class="text-[#705F4A] text-xs tracking-widest uppercase mt-1">Luxury Collection</p>
+                <p class="text-[#705F4A] text-sm tracking-widest uppercase mt-1">Luxury Collection</p>
             </div>
             <div class="w-8 h-px bg-[#B8935A]"></div>
-            <p class="text-[#705F4A] text-xs tracking-widest uppercase">
-                &copy; {{ date('Y') }} HotelKu · Seluruh hak dilindungi
+            <p class="text-[#705F4A] text-sm tracking-widest uppercase">
+                &copy; {{ date('Y') }} Royal Crown Hotel · Seluruh hak dilindungi
             </p>
         </div>
     </div>
