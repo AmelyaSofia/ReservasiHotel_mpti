@@ -66,7 +66,7 @@ class RoomSeeder extends Seeder
         ];
 
         foreach ($kamarData as $data) {
-            Room::firstOrCreate(['room_number' => $data['room_number']], $data);
+            Room::updateOrCreate(['room_number' => $data['room_number']], $data);
         }
 
         // ── Relasi Fasilitas ─────────────────────────────────────────────────
