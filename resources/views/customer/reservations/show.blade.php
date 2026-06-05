@@ -156,19 +156,19 @@
     {{-- Actions under card --}}
     @if($reservation->isCancellable())
         <div class="flex justify-center gap-4">
-            <form action="{{ route('customer.reservations.cancel', $reservation) }}" method="POST" class="w-full max-w-xs" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan reservasi ini? Pembatalan akan membebaskan kamar kembali secara otomatis.')">
-                @csrf
-                @method('PATCH')
-                <button type="submit" class="w-full btn-danger py-3.5 flex items-center justify-center gap-2 shadow-sm bg-red-700 hover:bg-red-800">
+            <div class="w-full max-w-xs">
+                <button type="button" onclick="openLuxuryModal('{{ route('customer.reservations.cancel', $reservation) }}', 'PATCH', 'Batalkan Reservasi', 'Apakah Anda yakin ingin membatalkan reservasi ini? Tindakan ini tidak dapat diurungkan dan kamar akan kembali tersedia untuk pelanggan lain.', 'Batalkan Reservasi')" class="w-full py-3.5 flex items-center justify-center gap-2 shadow-sm bg-red-700 hover:bg-red-800 text-white font-semibold text-sm tracking-widest uppercase transition-colors">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                     </svg>
                     Batalkan Reservasi
                 </button>
-            </form>
+            </div>
         </div>
     @endif
 
 </div>
+
+
 
 @endsection

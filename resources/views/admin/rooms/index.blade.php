@@ -140,13 +140,9 @@
                                 <a href="{{ route('admin.rooms.edit', $room) }}" class="text-xs text-[#B8935A] hover:text-[#9E7A42] font-medium tracking-wider uppercase transition-colors" title="Ubah Kamar">
                                     Edit
                                 </a>
-                                <form action="{{ route('admin.rooms.destroy', $room) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus Kamar {{ $room->room_number }}? Kamar yang terhapus tidak dapat dipulihkan.')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-xs text-red-700 hover:text-red-900 font-medium tracking-wider uppercase transition-colors" title="Hapus Kamar">
+                                <button type="button" onclick="openLuxuryModal('{{ route('admin.rooms.destroy', $room) }}', 'DELETE', 'Hapus Kamar', 'Apakah Anda yakin ingin menghapus Kamar {{ $room->room_number }}? Kamar yang terhapus tidak dapat dipulihkan.', 'Hapus')" class="text-xs text-red-700 hover:text-red-900 font-medium tracking-wider uppercase transition-colors" title="Hapus Kamar">
                                         Hapus
                                     </button>
-                                </form>
                             </div>
                         </td>
                     </tr>

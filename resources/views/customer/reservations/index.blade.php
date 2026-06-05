@@ -115,13 +115,11 @@
                     </a>
 
                     @if($reservasi->isCancellable())
-                        <form action="{{ route('customer.reservations.cancel', $reservasi) }}" method="POST" class="flex-1 sm:flex-initial" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan reservasi ini? Pembatalan akan membebaskan kamar kembali.')">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="w-full btn-danger py-2 px-4 text-xs text-center tracking-wider font-medium bg-red-700/10 text-red-800 hover:bg-red-800 hover:text-white border border-red-200">
+                        <div class="flex-1 sm:flex-initial">
+                            <button type="button" onclick="openLuxuryModal('{{ route('customer.reservations.cancel', $reservasi) }}', 'PATCH', 'Batalkan Reservasi', 'Apakah Anda yakin ingin membatalkan reservasi ini? Tindakan ini tidak dapat diurungkan dan kamar akan kembali tersedia untuk pelanggan lain.', 'Batalkan Reservasi')" class="w-full py-2 px-4 text-xs text-center tracking-wider font-medium bg-red-700/10 text-red-800 hover:bg-red-800 hover:text-white border border-red-200 transition-colors">
                                 Batalkan
                             </button>
-                        </form>
+                        </div>
                     @endif
                 </div>
 
@@ -141,5 +139,7 @@
         </div>
     @endif
 @endif
+
+
 
 @endsection

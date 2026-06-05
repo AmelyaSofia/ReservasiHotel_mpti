@@ -82,6 +82,18 @@
             </svg>
             <span class="text-sm">Reservasi</span>
         </a>
+
+        <div class="px-6 mt-6 mb-4">
+            <p class="text-[#705F4A] text-sm tracking-[0.2em] uppercase font-semibold">Pengguna</p>
+        </div>
+
+        <a href="{{ route('admin.customers.index') }}"
+           class="sidebar-link {{ request()->routeIs('admin.customers.*') ? 'active' : '' }}">
+            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <span class="text-sm">Pelanggan</span>
+        </a>
     </nav>
 
     {{-- User + Logout --}}
@@ -179,6 +191,75 @@ function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('-translate-x-full');
     document.getElementById('sidebarOverlay').classList.toggle('hidden');
 }
+</script>
+
+{{-- Global Luxury Confirmation Modal --}}
+<div id="luxuryConfirmModal" class="fixed inset-0 z-[99] hidden opacity-0 transition-opacity duration-300" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-[#2A1D14]/70 backdrop-blur-sm" onclick="closeLuxuryModal()"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+            <div id="luxuryModalPanel" class="relative transform overflow-hidden bg-[#FDFCF8] text-left shadow-2xl transition-all duration-300 scale-95 opacity-0 sm:my-8 sm:w-full sm:max-w-md border border-[#B8935A]/30">
+                <div class="h-1 w-full" style="background: linear-gradient(90deg, transparent, #B8935A, transparent);"></div>
+                <div class="px-6 py-8 sm:px-10 sm:py-10 text-center">
+                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#F7F4EE] border border-[#EDE8DC] mb-6">
+                        <svg class="h-8 w-8 text-[#8C2323]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-light text-[#2A1D14] mb-3" id="luxuryModalTitle" style="font-family: 'Cormorant Garamond', serif;">Konfirmasi</h3>
+                    <p class="text-sm text-[#8C7B65] leading-relaxed" id="luxuryModalDesc">Apakah Anda yakin ingin melanjutkan tindakan ini?</p>
+                </div>
+                <div class="bg-[#F7F4EE] px-6 py-4 border-t border-[#EDE8DC] flex flex-col-reverse sm:flex-row sm:justify-center gap-3">
+                    <button type="button" onclick="closeLuxuryModal()" class="w-full sm:w-auto inline-flex justify-center items-center px-6 py-2.5 text-xs font-semibold tracking-widest uppercase text-[#705F4A] bg-white border border-[#EDE8DC] hover:bg-[#FDFCF8] hover:text-[#2A1D14] transition-colors focus:outline-none">
+                        Batal
+                    </button>
+                    <form id="luxuryModalForm" method="POST" action="" class="w-full sm:w-auto m-0 p-0">
+                        @csrf
+                        <input type="hidden" name="_method" id="luxuryModalMethod" value="DELETE">
+                        <button type="submit" id="luxuryModalSubmitBtn" class="w-full sm:w-auto inline-flex justify-center items-center px-6 py-2.5 text-xs font-semibold tracking-widest uppercase text-white bg-[#8C2323] hover:bg-[#5C1515] transition-colors focus:outline-none shadow-md">
+                            Konfirmasi
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openLuxuryModal(actionUrl, method, title, desc, btnText, btnColor = 'bg-[#8C2323] hover:bg-[#5C1515]') {
+        document.getElementById('luxuryModalForm').action = actionUrl;
+        document.getElementById('luxuryModalMethod').value = method;
+        document.getElementById('luxuryModalTitle').innerText = title;
+        document.getElementById('luxuryModalDesc').innerText = desc;
+        
+        const submitBtn = document.getElementById('luxuryModalSubmitBtn');
+        submitBtn.innerText = btnText;
+        submitBtn.className = `w-full sm:w-auto inline-flex justify-center items-center px-6 py-2.5 text-xs font-semibold tracking-widest uppercase text-white transition-colors focus:outline-none shadow-md ${btnColor}`;
+        
+        const modal = document.getElementById('luxuryConfirmModal');
+        const panel = document.getElementById('luxuryModalPanel');
+        
+        modal.classList.remove('hidden');
+        void modal.offsetWidth;
+        modal.classList.remove('opacity-0');
+        panel.classList.remove('scale-95', 'opacity-0');
+        panel.classList.add('scale-100', 'opacity-100');
+    }
+
+    function closeLuxuryModal() {
+        const modal = document.getElementById('luxuryConfirmModal');
+        const panel = document.getElementById('luxuryModalPanel');
+        
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0');
+        panel.classList.remove('scale-100', 'opacity-100');
+        panel.classList.add('scale-95', 'opacity-0');
+        
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
 </script>
 </body>
 </html>
