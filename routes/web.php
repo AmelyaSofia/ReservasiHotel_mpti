@@ -58,6 +58,10 @@ Route::middleware(['auth', 'admin'])
         Route::patch('/reservations/{reservation}/confirm',  [AdminReservation::class, 'confirm'])->name('reservations.confirm');
         Route::patch('/reservations/{reservation}/complete', [AdminReservation::class, 'complete'])->name('reservations.complete');
         Route::patch('/reservations/{reservation}/cancel',   [AdminReservation::class, 'cancel'])->name('reservations.cancel');
+        
+        // Pelanggan
+        Route::get('/customers', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customers.index');
+        Route::delete('/customers/{user}', [App\Http\Controllers\Admin\CustomerController::class, 'destroy'])->name('customers.destroy');
     });
 
 // ─── Area Pelanggan ────────────────────────────────────────────────────────────
