@@ -5,24 +5,32 @@
 @section('content')
 
 {{-- ════════════════════════════════════════ HERO HEADER ════ --}}
-<div class="relative overflow-hidden mb-10" style="background: linear-gradient(135deg, #2A1D14 0%, #3D2B1F 50%, #1A1510 100%);">
-    <div class="absolute inset-0 opacity-5"
-         style="background-image: repeating-linear-gradient(45deg, #B8935A 0, #B8935A 1px, transparent 0, transparent 50%); background-size: 24px 24px;">
+<div class="relative overflow-hidden mb-10" style="min-height: 200px;">
+    {{-- Hotel exterior photo --}}
+    <div class="absolute inset-0"
+         style="background-image: url('/images/hotel-exterior.jpg'); background-size: cover; background-position: center 60%;">
     </div>
-    <div class="absolute top-5 left-5 w-10 h-10 border-t border-l border-[#B8935A]/40 hidden sm:block"></div>
-    <div class="absolute bottom-5 right-5 w-10 h-10 border-b border-r border-[#B8935A]/40 hidden sm:block"></div>
+    {{-- Overlay --}}
+    <div class="absolute inset-0"
+         style="background: linear-gradient(135deg, rgba(26,16,8,0.86) 0%, rgba(42,29,20,0.72) 60%, rgba(26,16,8,0.68) 100%);">
+    </div>
+    <div class="absolute top-5 left-5 w-10 h-10 border-t border-l hidden sm:block" style="border-color: rgba(184,147,90,0.5);"></div>
+    <div class="absolute top-5 right-5 w-10 h-10 border-t border-r hidden sm:block" style="border-color: rgba(184,147,90,0.5);"></div>
+    <div class="absolute bottom-5 left-5 w-10 h-10 border-b border-l hidden sm:block" style="border-color: rgba(184,147,90,0.5);"></div>
+    <div class="absolute bottom-5 right-5 w-10 h-10 border-b border-r hidden sm:block" style="border-color: rgba(184,147,90,0.5);"></div>
 
-    <div class="relative px-8 sm:px-12 py-12">
-        <p class="text-xs text-[#B8935A] tracking-[0.3em] uppercase mb-2">Luxury Living</p>
-        <h1 class="text-4xl sm:text-5xl font-light text-white" style="font-family: 'Cormorant Garamond', serif;">
+    <div class="relative px-8 sm:px-14 py-14">
+        <p class="text-xs text-[#C9A96E] tracking-[0.25em] uppercase font-semibold mb-3">Luxury Living</p>
+        <h1 class="text-3xl sm:text-4xl font-semibold text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em; text-shadow: 0 2px 12px rgba(0,0,0,0.4);">
             Koleksi Kamar Kami
         </h1>
-        <div class="w-10 h-px bg-[#B8935A] my-4"></div>
-        <p class="text-[#A89880] text-sm tracking-wide max-w-xl leading-relaxed">
+        <div class="w-10 h-0.5 bg-[#B8935A] my-4"></div>
+        <p class="text-white/65 text-sm max-w-xl leading-relaxed">
             Rasakan perpaduan sempurna keanggunan klasik dan kenyamanan modern di setiap sudut suite eksklusif kami.
         </p>
     </div>
 </div>
+
 
 {{-- ════════════════════════════════════════ FILTERS ════ --}}
 <div class="card-luxury p-6 mb-8 bg-white">
@@ -114,8 +122,8 @@
                         {{-- Title & Type --}}
                         <div class="flex items-start justify-between gap-3 mb-3">
                             <div>
-                                <p class="text-[10px] text-[#B8935A] tracking-[0.2em] uppercase font-semibold">{{ $room->roomType->name }}</p>
-                                <h3 class="text-lg font-light text-[#2A1D14] group-hover:text-[#B8935A] transition-colors mt-0.5" style="font-family: 'Cormorant Garamond', serif;">
+                            <p class="text-[10px] text-[#B8935A] tracking-[0.2em] uppercase font-medium" style="font-family: 'Montserrat', sans-serif;">{{ $room->roomType->name }}</p>
+                                <h3 class="text-lg font-semibold text-[#2A1D14] group-hover:text-[#B8935A] transition-colors mt-0.5" style="font-family: 'Cormorant Garamond', serif;">
                                     Suite {{ $room->room_number }}
                                 </h3>
                             </div>

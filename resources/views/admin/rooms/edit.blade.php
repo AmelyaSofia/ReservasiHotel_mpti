@@ -15,7 +15,7 @@
         <span class="text-xs text-[#A89880]">&gt;</span>
         <span class="text-xs text-[#B8935A] tracking-widest uppercase">Ubah Kamar</span>
     </div>
-    <h2 class="text-3xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">
+    <h2 class="text-2xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
         Ubah Kamar {{ $room->room_number }}
     </h2>
     <div class="gold-line mt-3"></div>

@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="bg-white border border-[#EDE8DC] p-6 mb-6">
-    <h2 class="text-2xl font-light text-[#2A1D14] mb-2" style="font-family: 'Cormorant Garamond', serif;">{{ $roomType->name }}</h2>
+    <h2 class="text-xl font-light text-[#2A1D14] mb-2" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">{{ $roomType->name }}</h2>
     <p class="text-[#8C7B65] mb-4 text-lg">{{ 'Rp ' . number_format($roomType->price_per_night, 0, ',', '.') }} / malam</p>
     <div class="prose max-w-none text-[#705F4A] mb-6">
         {{ $roomType->description ?? 'Tidak ada deskripsi.' }}

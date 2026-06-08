@@ -58,19 +58,23 @@
             {{-- Room Content --}}
             <div class="p-6 sm:p-8 space-y-6">
                 <div>
-                    <p class="text-xs text-[#B8935A] tracking-[0.25em] uppercase font-semibold mb-1">{{ $room->roomType->name }}</p>
-                    <h2 class="text-3xl font-light text-[#2A1D14] mb-4" style="font-family: 'Cormorant Garamond', serif;">
+                    <p class="text-xs text-[#B8935A] tracking-[0.25em] uppercase font-medium mb-1" style="font-family: 'Montserrat', sans-serif;">{{ $room->roomType->name }}</p>
+                    <h2 class="text-2xl font-semibold text-[#2A1D14] mb-3" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.03em;">
                         Suite {{ $room->room_number }}
                     </h2>
-                    <div class="w-12 h-0.5 bg-[#B8935A] mb-5"></div>
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-8 h-px bg-[#B8935A]/50"></div>
+                        <span class="text-[#B8935A] text-xs">◆</span>
+                        <div class="w-8 h-px bg-[#B8935A]/50"></div>
+                    </div>
                     
-                    <h4 class="text-sm font-semibold text-[#8C7B65] uppercase tracking-wider mb-2.5">Deskripsi Kamar</h4>
+                    <h4 class="text-xs font-medium text-[#8C7B65] uppercase tracking-[0.15em] mb-2.5" style="font-family: 'Montserrat', sans-serif;">Deskripsi Kamar</h4>
                     <p class="text-sm text-[#5C4033] leading-relaxed whitespace-pre-line">{{ $room->description }}</p>
                 </div>
 
                 {{-- Facilities --}}
                 <div class="border-t border-[#EDE8DC] pt-6">
-                    <h4 class="text-sm font-semibold text-[#8C7B65] uppercase tracking-wider mb-4">Fasilitas Suite Eksklusif</h4>
+                    <h4 class="text-xs font-medium text-[#8C7B65] uppercase tracking-[0.15em] mb-4" style="font-family: 'Montserrat', sans-serif;">Fasilitas Suite Eksklusif</h4>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
                         @forelse($room->facilities as $fac)
                             <div class="flex items-center gap-2.5 px-4 py-3 border border-[#EDE8DC] bg-[#F7F4EE]/50 hover:bg-[#F7F4EE] hover:border-[#DDD5C5] transition-colors duration-200">
@@ -132,9 +136,13 @@
 
         {{-- Luxury Promise Card --}}
         <div class="card-luxury p-6 bg-[#2A1D14] text-white space-y-4">
-            <p class="text-[10px] text-[#D4B896] tracking-[0.25em] uppercase font-semibold">Jaminan Kami</p>
-            <h4 class="text-xl font-light font-serif text-white">Layanan Bintang Lima</h4>
-            <div class="w-6 h-px bg-[#B8935A]"></div>
+            <p class="text-[10px] text-[#D4B896] tracking-[0.25em] uppercase" style="font-family: 'Montserrat', sans-serif;">Jaminan Kami</p>
+            <h4 class="text-xl font-semibold text-white" style="font-family: 'Cormorant Garamond', serif;">Layanan Bintang Lima</h4>
+            <div class="flex items-center gap-3">
+                <div class="w-6 h-px bg-[#B8935A]"></div>
+                <span class="text-[#B8935A] text-[8px]">◆</span>
+                <div class="w-6 h-px bg-[#B8935A]/30"></div>
+            </div>
             <div class="space-y-3 text-xs text-[#A89880] leading-relaxed">
                 <p class="flex items-center gap-2">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#B8935A] shrink-0"></span>
@@ -142,7 +150,7 @@
                 </p>
                 <p class="flex items-center gap-2">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#B8935A] shrink-0"></span>
-                    <span>Kebersihan Terjamin Standar Internasional</span>
+                    <span>Kebersihan Terjamin Standar Montserratnasional</span>
                 </p>
                 <p class="flex items-center gap-2">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#B8935A] shrink-0"></span>

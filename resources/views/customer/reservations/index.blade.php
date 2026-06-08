@@ -8,7 +8,7 @@
 <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
     <div>
         <p class="text-xs text-[#B8935A] tracking-[0.3em] uppercase mb-2">Riwayat Transaksi</p>
-        <h2 class="text-3xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">
+        <h2 class="text-2xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
             Reservasi Saya
         </h2>
         <div class="gold-line mt-3"></div>

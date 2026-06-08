@@ -1,20 +1,53 @@
 @extends('layouts.admin')
-@section('title', 'Edit Fasilitas')
-@section('page_title', 'Edit Fasilitas')
-@section('breadcrumb', 'Master Data / Fasilitas / Edit')
+
+@section('title', 'Ubah Fasilitas')
+@section('page_title', 'Fasilitas')
+@section('breadcrumb', 'Master Data / Fasilitas / Ubah')
 
 @section('content')
-<div class="bg-white border border-[#EDE8DC] p-6 max-w-lg">
-    <form action="{{ route('admin.facilities.update', $facility) }}" method="POST" class="space-y-5">
-        @csrf @method('PUT')
+
+{{-- ════════════════════════ PAGE HEADER ════ --}}
+<div class="mb-8">
+    <div class="flex items-center gap-2 mb-2">
+        <a href="{{ route('admin.facilities.index') }}" class="text-xs text-[#8C7B65] hover:text-[#2A1D14] tracking-widest uppercase transition-colors">
+            Fasilitas
+        </a>
+        <span class="text-xs text-[#A89880]">&gt;</span>
+        <span class="text-xs text-[#B8935A] tracking-widest uppercase">Ubah Fasilitas</span>
+    </div>
+    <h2 class="text-2xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
+        Ubah Data Fasilitas
+    </h2>
+    <div class="gold-line mt-3"></div>
+</div>
+
+{{-- ════════════════════════ FORM CONTAINER ════ --}}
+<div class="card-luxury p-6 sm:p-8 max-w-xl">
+    <p class="text-xs text-[#B8935A] tracking-widest uppercase border-b border-[#EDE8DC] pb-3 mb-5 font-semibold">
+        Informasi Fasilitas
+    </p>
+
+    <form action="{{ route('admin.facilities.update', $facility) }}" method="POST" class="space-y-6">
+        @csrf
+        @method('PUT')
+        
         <div>
-            <label class="block text-sm font-medium text-[#705F4A] mb-1">Nama Fasilitas</label>
-            <input type="text" name="name" value="{{ old('name', $facility->name) }}" required class="w-full border-[#EDE8DC] focus:ring-[#B8935A] focus:border-[#B8935A]">
-            @error('name')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+            <label for="name" class="form-label">Nama Fasilitas <span class="text-red-700">*</span></label>
+            <input type="text" name="name" id="name" value="{{ old('name', $facility->name) }}" required 
+                   class="form-input-box @error('name') border-red-500 @enderror" 
+                   placeholder="Contoh: WiFi Kecepatan Tinggi, AC, Bathub">
+            @error('name')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="pt-4 flex gap-3">
-            <button type="submit" class="px-6 py-2 bg-[#B8935A] text-white text-sm tracking-widest uppercase hover:bg-[#8C7B65] transition-colors">Simpan</button>
-            <a href="{{ route('admin.facilities.index') }}" class="px-6 py-2 bg-[#F7F4EE] text-[#705F4A] border border-[#EDE8DC] text-sm tracking-widest uppercase hover:bg-[#EDE8DC] transition-colors">Batal</a>
+
+        <div class="pt-4 flex items-center gap-3">
+            <button type="submit" class="btn-primary py-2.5 px-6">
+                Simpan Perubahan
+            </button>
+            <a href="{{ route('admin.facilities.index') }}" class="btn-outline py-2.5 px-6">
+                Batal
+            </a>
         </div>
     </form>
 </div>

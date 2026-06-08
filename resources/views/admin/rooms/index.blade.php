@@ -10,7 +10,7 @@
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
     <div>
         <p class="text-xs text-[#B8935A] tracking-[0.3em] uppercase mb-2">Master Data</p>
-        <h2 class="text-3xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">
+        <h2 class="text-2xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
             Kamar Hotel
         </h2>
         <div class="gold-line mt-3"></div>
@@ -29,7 +29,7 @@
 <div class="card-luxury overflow-hidden">
     <div class="px-6 py-5 border-b border-[#EDE8DC]">
         <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-1">Daftar Kamar</p>
-        <h3 class="text-xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">Semua Unit Kamar</h3>
+        <h3 class="text-xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">Semua Unit Kamar</h3>
     </div>
 
     @if($rooms->isEmpty())

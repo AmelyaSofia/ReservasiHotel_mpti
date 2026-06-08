@@ -10,7 +10,7 @@
 <div class="flex items-end justify-between mb-8">
     <div>
         <p class="text-xs text-[#B8935A] tracking-[0.3em] uppercase mb-2">Panel Administrasi</p>
-        <h2 class="text-3xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">
+        <h2 class="text-2xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
             Selamat Datang, {{ auth()->user()->name }}
         </h2>
         <div class="gold-line mt-3"></div>
@@ -36,8 +36,8 @@
     <div class="stat-card group hover:border-[#D4B896] transition-colors duration-300">
         <div class="flex items-start justify-between">
             <div>
-                <p class="text-xs text-[#A89880] tracking-widest uppercase">{{ $card['label'] }}</p>
-                <p class="text-4xl font-light text-[#2A1D14] mt-2" style="font-family: 'Cormorant Garamond', serif;">
+                <p class="text-[#A89880] text-xs tracking-widest uppercase">{{ $card['label'] }}</p>
+                <p class="text-3xl font-semibold text-[#2A1D14] mt-2">
                     {{ $card['value'] }}
                 </p>
             </div>
@@ -59,7 +59,7 @@
     {{-- Status Reservasi --}}
     <div class="card-luxury p-6">
         <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-1">Reservasi</p>
-        <h3 class="text-xl font-light text-[#2A1D14] mb-5" style="font-family: 'Cormorant Garamond', serif;">Status Pemesanan</h3>
+        <h3 class="text-xl font-light text-[#2A1D14] mb-5" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">Status Pemesanan</h3>
 
         @php
             $total = max($stats['total_reservasi'], 1);
@@ -101,7 +101,7 @@
     {{-- Occupancy --}}
     <div class="card-luxury p-6">
         <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-1">Kamar</p>
-        <h3 class="text-xl font-light text-[#2A1D14] mb-5" style="font-family: 'Cormorant Garamond', serif;">Tingkat Hunian</h3>
+        <h3 class="text-xl font-light text-[#2A1D14] mb-5" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">Tingkat Hunian</h3>
 
         @php
             $totalK = max($stats['total_kamar'], 1);
@@ -111,7 +111,7 @@
         {{-- Circular-style percentage --}}
         <div class="flex items-center gap-6 mb-5">
             <div class="text-center">
-                <p class="text-5xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">{{ $occupancy }}%</p>
+                <p class="text-4xl font-semibold text-[#2A1D14]">{{ $occupancy }}%</p>
                 <p class="text-xs text-[#A89880] tracking-wider mt-1">Tingkat Hunian</p>
             </div>
             <div class="flex-1 space-y-2">
@@ -151,7 +151,7 @@
     {{-- Aksi Cepat --}}
     <div class="card-luxury p-6">
         <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-1">Navigasi</p>
-        <h3 class="text-xl font-light text-[#2A1D14] mb-5" style="font-family: 'Cormorant Garamond', serif;">Akses Cepat</h3>
+        <h3 class="text-xl font-light text-[#2A1D14] mb-5" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">Akses Cepat</h3>
 
         <div class="space-y-2">
             @php
@@ -175,7 +175,7 @@
                             {{ $link['badge'] }}
                         </span>
                     @endif
-                    <svg class="w-3.5 h-3.5 text-[#C9A96E] opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <svg class="w-3.5 h-3.5 text-[#C9A96E]/50 group-hover:text-[#B8935A] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                     </svg>
                 </div>
@@ -190,7 +190,7 @@
     <div class="px-6 py-5 border-b border-[#EDE8DC] flex items-end justify-between">
         <div>
             <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-1">Data Terkini</p>
-            <h3 class="text-xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">Reservasi Terbaru</h3>
+            <h3 class="text-xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">Reservasi Terbaru</h3>
         </div>
         <a href="{{ route('admin.reservations.index') }}"
             class="text-xs text-[#B8935A] tracking-widest uppercase hover:text-[#9E7A42] transition-colors flex items-center gap-1.5">

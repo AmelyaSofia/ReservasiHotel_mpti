@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Panel Admin') — Royal Crown Hotel</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600,700|jost:300,400,500,600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="h-full flex" style="background-color: #F7F4EE;">
@@ -19,20 +20,20 @@
 
     {{-- Brand --}}
     <div class="px-6 py-7 border-b" style="border-color: rgba(184, 147, 90, 0.2);">
-        <div class="flex items-center gap-2 mb-1">
-            <div class="w-px h-5 bg-[#B8935A]"></div>
-            <p class="text-[#B8935A] text-sm tracking-[0.3em] uppercase font-medium">Luxury Collection</p>
+        <div class="flex items-center gap-2 mb-1.5">
+            <div class="w-px h-4 bg-[#B8935A]"></div>
+            <p class="text-[#B8935A] text-xs tracking-[0.35em] uppercase" style="font-family: 'Montserrat', sans-serif;">Luxury Collection</p>
         </div>
-        <h2 class="text-2xl font-light text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.05em;">
-            Royal Crown <em class="text-[#D4B896]">Hotel</em>
+        <h2 class="text-xl font-semibold text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.03em;">
+            Royal Crown <em class="text-[#D4B896] font-normal">Hotel</em>
         </h2>
-        <p class="text-[#705F4A] text-sm mt-1 tracking-wider">Panel Administrasi</p>
+        <p class="text-[#A89880]/70 text-xs mt-1.5 tracking-wider" style="font-family: 'Montserrat', sans-serif;">Panel Administrasi</p>
     </div>
 
     {{-- Nav --}}
-    <nav class="flex-1 py-6 overflow-y-auto">
-        <div class="px-6 mb-4">
-            <p class="text-[#705F4A] text-sm tracking-[0.2em] uppercase font-semibold">Utama</p>
+    <nav class="flex-1 py-6 overflow-y-auto no-scrollbar">
+        <div class="px-6 mb-3">
+            <p class="text-[#8C7B65] text-[10px] tracking-[0.25em] uppercase font-bold">Utama</p>
         </div>
 
         <a href="{{ route('admin.dashboard') }}"
@@ -40,11 +41,11 @@
             <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
             </svg>
-            <span class="text-sm">Dashboard</span>
+            <span>Dashboard</span>
         </a>
 
-        <div class="px-6 mt-6 mb-4">
-            <p class="text-[#705F4A] text-sm tracking-[0.2em] uppercase font-semibold">Master Data</p>
+        <div class="px-6 mt-6 mb-3">
+            <p class="text-[#8C7B65] text-[10px] tracking-[0.25em] uppercase font-bold">Master Data</p>
         </div>
 
         <a href="{{ route('admin.room-types.index') }}"
@@ -52,7 +53,7 @@
             <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
             </svg>
-            <span class="text-sm">Tipe Kamar</span>
+            <span>Tipe Kamar</span>
         </a>
 
         <a href="{{ route('admin.rooms.index') }}"
@@ -60,7 +61,7 @@
             <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
             </svg>
-            <span class="text-sm">Kamar</span>
+            <span>Kamar</span>
         </a>
 
         <a href="{{ route('admin.facilities.index') }}"
@@ -68,11 +69,11 @@
             <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
             </svg>
-            <span class="text-sm">Fasilitas</span>
+            <span>Fasilitas</span>
         </a>
 
-        <div class="px-6 mt-6 mb-4">
-            <p class="text-[#705F4A] text-sm tracking-[0.2em] uppercase font-semibold">Transaksi</p>
+        <div class="px-6 mt-6 mb-3">
+            <p class="text-[#8C7B65] text-[10px] tracking-[0.25em] uppercase font-bold">Transaksi</p>
         </div>
 
         <a href="{{ route('admin.reservations.index') }}"
@@ -80,11 +81,11 @@
             <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
             </svg>
-            <span class="text-sm">Reservasi</span>
+            <span>Reservasi</span>
         </a>
 
-        <div class="px-6 mt-6 mb-4">
-            <p class="text-[#705F4A] text-sm tracking-[0.2em] uppercase font-semibold">Pengguna</p>
+        <div class="px-6 mt-6 mb-3">
+            <p class="text-[#8C7B65] text-[10px] tracking-[0.25em] uppercase font-bold">Pengguna</p>
         </div>
 
         <a href="{{ route('admin.customers.index') }}"
@@ -92,7 +93,7 @@
             <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
-            <span class="text-sm">Pelanggan</span>
+            <span>Pelanggan</span>
         </a>
     </nav>
 
@@ -139,11 +140,11 @@
         </button>
 
         <div class="flex-1">
-            <h1 class="text-2xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
+            <h1 class="text-xl font-semibold text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.03em;">
                 @yield('page_title', 'Dashboard')
             </h1>
             @hasSection('breadcrumb')
-            <p class="text-sm text-[#A89880] tracking-wide mt-0.5">@yield('breadcrumb')</p>
+            <p class="text-xs text-[#A89880] tracking-wider mt-0.5" style="font-family: 'Montserrat', sans-serif;">@yield('breadcrumb')</p>
             @endif
         </div>
 
@@ -206,7 +207,7 @@ function toggleSidebar() {
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-light text-[#2A1D14] mb-3" id="luxuryModalTitle" style="font-family: 'Cormorant Garamond', serif;">Konfirmasi</h3>
+                    <h3 class="text-xl font-light text-[#2A1D14] mb-3" id="luxuryModalTitle" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">Konfirmasi</h3>
                     <p class="text-sm text-[#8C7B65] leading-relaxed" id="luxuryModalDesc">Apakah Anda yakin ingin melanjutkan tindakan ini?</p>
                 </div>
                 <div class="bg-[#F7F4EE] px-6 py-4 border-t border-[#EDE8DC] flex flex-col-reverse sm:flex-row sm:justify-center gap-3">

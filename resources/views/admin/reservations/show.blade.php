@@ -6,7 +6,7 @@
 @section('content')
 <div class="bg-white border border-[#EDE8DC] p-6 max-w-3xl">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">Reservasi #{{ $reservation->id }}</h2>
+        <h2 class="text-xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">Reservasi #{{ $reservation->id }}</h2>
         <div>
             @if($reservation->status == 'pending') <span class="px-3 py-1 bg-orange-100 text-orange-700 text-xs font-bold uppercase tracking-widest rounded-full">Pending</span>
             @elseif($reservation->status == 'confirmed') <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-widest rounded-full">Confirmed</span>

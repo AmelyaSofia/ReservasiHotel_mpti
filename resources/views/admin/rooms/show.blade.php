@@ -17,7 +17,7 @@
     </div>
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-            <h2 class="text-3xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">
+            <h2 class="text-2xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
                 Kamar {{ $room->room_number }}
             </h2>
             <div class="gold-line mt-3"></div>
@@ -79,7 +79,7 @@
             <div class="p-6 sm:p-8 space-y-6">
                 <div>
                     <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-1 font-semibold">Deskripsi</p>
-                    <h3 class="text-xl font-light text-[#2A1D14] mb-3" style="font-family: 'Cormorant Garamond', serif;">Pengantar Kamar</h3>
+                    <h3 class="text-xl font-light text-[#2A1D14] mb-3" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">Pengantar Kamar</h3>
                     <p class="text-sm text-[#5C4033] leading-relaxed whitespace-pre-line">{{ $room->description }}</p>
                 </div>
 
@@ -144,15 +144,15 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <div class="bg-[#F7F4EE] p-3 text-center border border-[#EDE8DC]">
-                    <p class="text-2xl font-light text-[#2A1D14] font-serif">{{ $activeReservations }}</p>
+                    <p class="text-xl font-medium text-[#2A1D14]">{{ $activeReservations }}</p>
                     <p class="text-[9px] text-[#A89880] tracking-wider uppercase mt-1">Aktif/Pending</p>
                 </div>
                 <div class="bg-[#F7F4EE] p-3 text-center border border-[#EDE8DC]">
-                    <p class="text-2xl font-light text-[#2A1D14] font-serif">{{ $completedReservations }}</p>
+                    <p class="text-xl font-medium text-[#2A1D14]">{{ $completedReservations }}</p>
                     <p class="text-[9px] text-[#A89880] tracking-wider uppercase mt-1">Selesai</p>
                 </div>
                 <div class="col-span-2 bg-[#F7F4EE] p-3 text-center border border-[#EDE8DC]">
-                    <p class="text-xl font-semibold text-[#B8935A] font-serif">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
+                    <p class="text-xl font-semibold text-[#B8935A]">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
                     <p class="text-[9px] text-[#A89880] tracking-wider uppercase mt-1">Estimasi Pendapatan Kamar</p>
                 </div>
             </div>
@@ -165,7 +165,7 @@
 <div class="card-luxury overflow-hidden">
     <div class="px-6 py-5 border-b border-[#EDE8DC]">
         <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-1">Riwayat Reservasi</p>
-        <h3 class="text-xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">Daftar Hunian Tamu</h3>
+        <h3 class="text-xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">Daftar Hunian Tamu</h3>
     </div>
 
     @if($room->reservations->isEmpty())

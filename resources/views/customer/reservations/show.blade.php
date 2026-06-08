@@ -41,7 +41,7 @@
                 <p class="text-[10px] text-[#B8935A] tracking-[0.35em] uppercase font-semibold">Luxury Collection</p>
                 <div class="w-10 h-px bg-[#B8935A]"></div>
             </div>
-            <h2 class="text-3xl font-light text-[#2A1D14] tracking-wide" style="font-family: 'Cormorant Garamond', serif;">
+            <h2 class="text-2xl font-light text-[#2A1D14] tracking-wide" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
                 Royal Crown <em class="text-[#B8935A]">Hotel</em>
             </h2>
             <p class="text-xs text-[#8C7B65] tracking-[0.2em] uppercase font-medium mt-1">Reservation Voucher</p>
@@ -127,7 +127,7 @@
                         <p class="text-[10px] text-[#8C7B65] uppercase tracking-widest font-semibold">Total Biaya</p>
                         <p class="text-[10px] text-[#A89880] mt-0.5">Sudah termasuk pajak & biaya layanan</p>
                     </div>
-                    <span class="text-2xl font-bold text-[#B8935A] font-serif">
+                    <span class="text-xl font-bold text-[#B8935A] font-serif">
                         Rp {{ number_format($reservation->total_price, 0, ',', '.') }}
                     </span>
                 </div>

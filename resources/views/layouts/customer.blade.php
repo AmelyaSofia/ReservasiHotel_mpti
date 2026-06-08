@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Beranda') — Royal Crown Hotel</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600,700|jost:300,400,500,600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="h-full" style="background-color: #F7F4EE;">
+<body class="h-full" style="background-color: #FAF7F2;">
 
 {{-- ═══════════════════════════════════════════ NAVBAR ══ --}}
 <nav class="sticky top-0 z-40 bg-white border-b border-[#EDE8DC]">
@@ -17,14 +18,14 @@
 
             {{-- Logo --}}
             <a href="{{ route('customer.dashboard') }}" class="flex items-center gap-3 group">
-                <div class="flex items-center gap-2">
-                    <div class="w-px h-6 bg-[#B8935A] group-hover:h-8 transition-all duration-300"></div>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-px h-7 bg-[#B8935A] group-hover:h-9 transition-all duration-300"></div>
                     <div>
-                        <h2 class="text-2xl font-light text-[#2A1D14] leading-none"
-                            style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.05em;">
-                            Royal Crown <em class="text-[#B8935A]">Hotel</em>
+                        <h2 class="text-xl font-semibold text-[#2A1D14] leading-none"
+                            style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.03em;">
+                            Royal Crown <em class="text-[#B8935A] font-normal">Hotel</em>
                         </h2>
-                        <p class="text-[#A89880] text-sm tracking-[0.2em] uppercase leading-none mt-0.5">Luxury Collection</p>
+                        <p class="text-[#A89880] text-xs tracking-[0.22em] uppercase leading-none mt-0.5" style="font-family: 'Montserrat', sans-serif;">Luxury Collection</p>
                     </div>
                 </div>
             </a>
@@ -40,10 +41,10 @@
                 @endphp
                 @foreach($navLinks as $link)
                 <a href="{{ route($link['route']) }}"
-                   class="relative px-4 py-2 text-sm tracking-widest uppercase transition-colors duration-200 group
+                   class="relative px-4 py-2 text-xs font-semibold tracking-[0.12em] uppercase transition-colors duration-200 group
                           {{ request()->routeIs($link['pattern'])
                                 ? 'text-[#B8935A]'
-                                : 'text-[#8C7B65] hover:text-[#2A1D14]' }}">
+                                : 'text-[#5C4033] hover:text-[#B8935A]' }}">
                     {{ $link['label'] }}
                     <span class="absolute bottom-0 left-4 right-4 h-px bg-[#B8935A] transition-transform duration-200 origin-left
                                  {{ request()->routeIs($link['pattern']) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }}">
@@ -116,19 +117,23 @@
 </main>
 
 <footer style="background-color: #2A1D14;" class="mt-16">
-    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-10">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div>
-                <h3 class="text-2xl font-light text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.05em;">
-                    Royal Crown <em class="text-[#D4B896]">Hotel</em>
-                </h3>
-                <p class="text-[#705F4A] text-sm tracking-widest uppercase mt-1">Luxury Collection</p>
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12">
+        {{-- Brand Row --}}
+        <div class="text-center mb-8">
+            <h3 class="text-2xl font-semibold text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.03em;">
+                Royal Crown <em class="text-[#D4B896] font-normal">Hotel</em>
+            </h3>
+            <p class="text-[#705F4A] text-xs tracking-[0.3em] uppercase mt-2" style="font-family: 'Montserrat', sans-serif;">Luxury Collection</p>
+            {{-- Ornamental rule --}}
+            <div class="flex items-center justify-center gap-4 mt-5">
+                <div class="w-16 h-px" style="background: linear-gradient(to right, transparent, rgba(184,147,90,0.5));"></div>
+                <span class="text-[#B8935A] text-xs">◆</span>
+                <div class="w-16 h-px" style="background: linear-gradient(to left, transparent, rgba(184,147,90,0.5));"></div>
             </div>
-            <div class="w-8 h-px bg-[#B8935A]"></div>
-            <p class="text-[#705F4A] text-sm tracking-widest uppercase">
-                &copy; {{ date('Y') }} Royal Crown Hotel · Seluruh hak dilindungi
-            </p>
         </div>
+        <p class="text-[#4A3828] text-xs tracking-[0.2em] uppercase text-center" style="font-family: 'Montserrat', sans-serif;">
+            &copy; {{ date('Y') }} Royal Crown Hotel &middot; Seluruh hak dilindungi
+        </p>
     </div>
 </footer>
 
@@ -146,7 +151,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-light text-[#2A1D14] mb-3" id="luxuryModalTitle" style="font-family: 'Cormorant Garamond', serif;">Konfirmasi</h3>
+                    <h3 class="text-xl font-light text-[#2A1D14] mb-3" id="luxuryModalTitle" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">Konfirmasi</h3>
                     <p class="text-sm text-[#8C7B65] leading-relaxed" id="luxuryModalDesc">Apakah Anda yakin ingin melanjutkan tindakan ini?</p>
                 </div>
                 <div class="bg-[#F7F4EE] px-6 py-4 border-t border-[#EDE8DC] flex flex-col-reverse sm:flex-row sm:justify-center gap-3">

@@ -17,7 +17,7 @@
         <span class="text-xs text-[#A89880]">&gt;</span>
         <span class="text-xs text-[#B8935A] tracking-widest uppercase">Reservasi</span>
     </div>
-    <h2 class="text-3xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif;">
+    <h2 class="text-2xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
         Pemesanan Kamar
     </h2>
     <div class="gold-line mt-3"></div>
@@ -119,7 +119,7 @@
             <div class="p-5 space-y-4">
                 <div>
                     <p class="text-[10px] text-[#B8935A] tracking-[0.2em] uppercase font-semibold">{{ $room->roomType->name }}</p>
-                    <h3 class="text-xl font-light text-[#2A1D14] mt-0.5" style="font-family: 'Cormorant Garamond', serif;">
+                    <h3 class="text-xl font-light text-[#2A1D14] mt-0.5" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
                         Suite {{ $room->room_number }}
                     </h3>
                 </div>

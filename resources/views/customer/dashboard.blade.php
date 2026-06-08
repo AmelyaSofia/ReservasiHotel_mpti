@@ -5,34 +5,42 @@
 @section('content')
 
 {{-- ════════════════════════════════════════ HERO GREETING ════ --}}
-<div class="relative overflow-hidden mb-10" style="background: linear-gradient(135deg, #2A1D14 0%, #3D2B1F 50%, #1A1510 100%);">
+<div class="relative overflow-hidden mb-10" style="min-height: 220px;">
 
-    {{-- Ornament pattern --}}
-    <div class="absolute inset-0 opacity-5"
-         style="background-image: repeating-linear-gradient(45deg, #B8935A 0, #B8935A 1px, transparent 0, transparent 50%); background-size: 24px 24px;">
+    {{-- Hotel lobby photo background --}}
+    <div class="absolute inset-0"
+         style="background-image: url('/images/hotel-lobby.jpg'); background-size: cover; background-position: center 30%;">
+    </div>
+
+    {{-- Dark gradient overlay --}}
+    <div class="absolute inset-0"
+         style="background: linear-gradient(135deg, rgba(26,16,8,0.88) 0%, rgba(42,29,20,0.75) 60%, rgba(26,16,8,0.70) 100%);">
     </div>
 
     {{-- Corner ornaments --}}
-    <div class="absolute top-5 left-5 w-10 h-10 border-t border-l border-[#B8935A]/40 hidden sm:block"></div>
-    <div class="absolute bottom-5 right-5 w-10 h-10 border-b border-r border-[#B8935A]/40 hidden sm:block"></div>
+    <div class="absolute top-5 left-5 w-10 h-10 border-t border-l hidden sm:block" style="border-color: rgba(184,147,90,0.5);"></div>
+    <div class="absolute top-5 right-5 w-10 h-10 border-t border-r hidden sm:block" style="border-color: rgba(184,147,90,0.5);"></div>
+    <div class="absolute bottom-5 left-5 w-10 h-10 border-b border-l hidden sm:block" style="border-color: rgba(184,147,90,0.5);"></div>
+    <div class="absolute bottom-5 right-5 w-10 h-10 border-b border-r hidden sm:block" style="border-color: rgba(184,147,90,0.5);"></div>
 
-    <div class="relative px-8 sm:px-12 py-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+    <div class="relative px-8 sm:px-14 py-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div>
-            <p class="text-xs text-[#B8935A] tracking-[0.3em] uppercase mb-3">Selamat Datang</p>
-            <h1 class="text-4xl sm:text-5xl font-light text-white leading-tight" style="font-family: 'Cormorant Garamond', serif;">
+            <p class="text-xs text-[#C9A96E] tracking-[0.25em] uppercase font-semibold mb-3">Selamat Datang Kembali</p>
+            <h1 class="text-3xl sm:text-4xl font-semibold text-white leading-tight" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em; text-shadow: 0 2px 12px rgba(0,0,0,0.4);">
                 {{ auth()->user()->name }}
             </h1>
-            <div class="w-10 h-px bg-[#B8935A] my-4"></div>
-            <p class="text-[#A89880] text-sm tracking-wide">
+            <div class="w-10 h-0.5 bg-[#B8935A] my-4"></div>
+            <p class="text-white/65 text-sm">
                 Nikmati pengalaman menginap yang tak terlupakan bersama kami
             </p>
         </div>
         <a href="{{ route('customer.catalog.index') }}"
-            class="btn-ghost-light shrink-0 text-xs">
+            class="btn-ghost-light shrink-0">
             Lihat Kamar
         </a>
     </div>
 </div>
+
 
 {{-- ══════════════════════════════════════════ STAT CARDS ════ --}}
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
@@ -45,12 +53,16 @@
         ];
     @endphp
     @foreach($statCards as $sc)
-    <div class="card-luxury p-5 text-center hover:border-[#C9A96E] transition-colors duration-300">
-        <p class="text-4xl font-light" style="font-family: 'Cormorant Garamond', serif; color: {{ $sc['color'] }};">
+    <div class="card-luxury p-6 text-center">
+        <p class="text-3xl font-semibold" style="color: {{ $sc['color'] }};">
             {{ $sc['value'] }}
         </p>
-        <div class="w-6 h-px bg-[#B8935A] mx-auto my-2"></div>
-        <p class="text-xs text-[#A89880] tracking-widest uppercase">{{ $sc['label'] }}</p>
+        <div class="flex items-center justify-center gap-2 my-2">
+            <div class="w-4 h-px bg-[#DDD5C5]"></div>
+            <span class="text-[#B8935A] text-[8px]">◆</span>
+            <div class="w-4 h-px bg-[#DDD5C5]"></div>
+        </div>
+        <p class="text-xs text-[#A89880] tracking-[0.15em] uppercase" style="font-family: 'Montserrat', sans-serif;">{{ $sc['label'] }}</p>
     </div>
     @endforeach
 </div>
@@ -146,7 +158,7 @@
             <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-4">Profil Saya</p>
 
             <div class="flex flex-col items-center text-center mb-5">
-                <div class="w-14 h-14 flex items-center justify-center text-white text-2xl font-light mb-3"
+                <div class="w-14 h-14 flex items-center justify-center text-white text-xl font-semibold mb-3"
                      style="font-family: 'Cormorant Garamond', serif; background-color: #B8935A;">
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </div>
