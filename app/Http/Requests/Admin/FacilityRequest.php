@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class FacilityRequest extends FormRequest
 {
@@ -14,7 +15,7 @@ class FacilityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100', 'unique:facilities,name,' . $this->route('facility')],
+            'name' => ['required', 'string', 'max:100', Rule::unique('facilities')->ignore($this->route('facility'))],
         ];
     }
 

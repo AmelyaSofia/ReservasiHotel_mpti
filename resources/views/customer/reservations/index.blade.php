@@ -114,7 +114,7 @@
                         Detail
                     </a>
 
-                    @if($reservasi->isCancellable())
+                    @if($reservasi->status === 'pending')
                         <div class="flex-1 sm:flex-initial">
                             <button type="button" onclick="openLuxuryModal('{{ route('customer.reservations.cancel', $reservasi) }}', 'PATCH', 'Batalkan Reservasi', 'Apakah Anda yakin ingin membatalkan reservasi ini? Tindakan ini tidak dapat diurungkan dan kamar akan kembali tersedia untuk pelanggan lain.', 'Batalkan Reservasi')" class="w-full py-2 px-4 text-xs text-center tracking-wider font-medium bg-red-700/10 text-red-800 hover:bg-red-800 hover:text-white border border-red-200 transition-colors">
                                 Batalkan

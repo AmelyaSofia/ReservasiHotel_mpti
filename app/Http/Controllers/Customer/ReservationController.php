@@ -98,6 +98,10 @@ class ReservationController extends Controller
             abort(403, 'Anda tidak memiliki akses ke reservasi ini.');
         }
 
+        if ($reservation->status !== 'pending') {
+            return back()->with('error', 'Hanya reservasi dengan status pending yang dapat dibatalkan.');
+        }
+
         try {
             $this->reservationService->cancelReservation($reservation);
 

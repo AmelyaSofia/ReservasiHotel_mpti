@@ -22,17 +22,64 @@ class CustomerController extends Controller
         return view('admin.customers.index', compact('customers'));
     }
 
+    public function create(): View
+    {
+        return view('admin.customers.create');
+    }
+
+    /**
+     * Simpan pelanggan baru ke database.
+     */
+    public function store(\App\Http\Requests\Admin\CustomerRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+        $data['role'] = 'customer';
+        $data['password'] = \Illuminate\Support\Facades\Hash::make($data['password']);
+
+        User::create($data);
+
+        return redirect()->route('admin.customers.index')
+            ->with('success', 'Pelanggan berhasil ditambahkan.');
+    }
+
+    /**
+     * Tampilkan form edit pelanggan.
+     */
+    public function edit(User $customer): View
+    {
+        return view('admin.customers.edit', compact('customer'));
+    }
+
+    /**
+     * Perbarui data pelanggan.
+     */
+    public function update(\App\Http\Requests\Admin\CustomerRequest $request, User $customer): RedirectResponse
+    {
+        $data = $request->validated();
+
+        if (empty($data['password'])) {
+            unset($data['password']);
+        } else {
+            $data['password'] = \Illuminate\Support\Facades\Hash::make($data['password']);
+        }
+
+        $customer->update($data);
+
+        return redirect()->route('admin.customers.index')
+            ->with('success', 'Pelanggan berhasil diperbarui.');
+    }
+
     /**
      * Hapus pelanggan beserta data yang terkait dengannya.
      */
-    public function destroy(User $user): RedirectResponse
+    public function destroy(User $customer): RedirectResponse
     {
-        if ($user->role !== 'customer') {
+        if ($customer->role !== 'customer') {
             return back()->with('error', 'Hanya akun pelanggan yang dapat dihapus.');
         }
 
         // Cek jika pelanggan memiliki reservasi aktif (pending/confirmed)
-        $hasActiveReservations = $user->reservations()
+        $hasActiveReservations = $customer->reservations()
             ->whereIn('status', ['pending', 'confirmed'])
             ->exists();
 
@@ -40,7 +87,7 @@ class CustomerController extends Controller
             return back()->with('error', 'Tidak dapat menghapus pelanggan yang masih memiliki reservasi aktif.');
         }
 
-        $user->delete();
+        $customer->delete();
 
         return redirect()->route('admin.customers.index')
             ->with('success', 'Akun pelanggan berhasil dihapus.');
