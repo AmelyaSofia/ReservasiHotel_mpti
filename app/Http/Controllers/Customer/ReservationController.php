@@ -63,6 +63,9 @@ class ReservationController extends Controller
                 checkOut: $checkOut,
             );
 
+            // Generate Midtrans Snap Token
+            $this->reservationService->generateMidtransSnapToken($reservation);
+
             return redirect()->route('customer.reservations.show', $reservation)
                 ->with('success', 'Reservasi berhasil dibuat! Silakan tunggu konfirmasi dari admin.');
         } catch (\Exception $e) {

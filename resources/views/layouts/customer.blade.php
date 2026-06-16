@@ -206,5 +206,7 @@
         }, 300);
     }
 </script>
+
+@stack('scripts')
 </body>
 </html>

@@ -138,7 +138,10 @@
                     </svg>
                     <div>
                         <span class="font-bold text-[#5C4033] uppercase text-[9px] tracking-wider block mb-0.5">Metode Pembayaran</span>
-                        Pembayaran dilakukan secara langsung (*offline*) di meja depan (*front office*) hotel saat Anda melakukan proses Check-in atau Check-out. Silakan tunjukkan Voucher digital ini kepada petugas resepsionis kami.
+                        Selesaikan pembayaran dengan mudah secara Online melalui berbagai metode (Transfer Bank, E-Wallet, Kartu Kredit).
+                        <div class="mt-2 text-[#B8935A] font-medium text-xs">
+                            Status Pembayaran: <span class="uppercase tracking-wider font-bold border-b border-[#B8935A]">{{ $reservation->payment_status }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -155,9 +158,20 @@
 
     {{-- Actions under card --}}
     @if($reservation->status === 'pending')
-        <div class="flex justify-center gap-4">
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            @if($reservation->payment_status === 'unpaid' && $reservation->snap_token)
             <div class="w-full max-w-xs">
-                <button type="button" onclick="openLuxuryModal('{{ route('customer.reservations.cancel', $reservation) }}', 'PATCH', 'Batalkan Reservasi', 'Apakah Anda yakin ingin membatalkan reservasi ini? Tindakan ini tidak dapat diurungkan dan kamar akan kembali tersedia untuk pelanggan lain.', 'Batalkan Reservasi')" class="w-full py-3.5 flex items-center justify-center gap-2 shadow-sm bg-red-700 hover:bg-red-800 text-white font-semibold text-sm tracking-widest uppercase transition-colors">
+                <button type="button" id="pay-button" class="w-full py-3.5 flex items-center justify-center gap-2 shadow-md bg-[#2A1D14] hover:bg-[#1A120C] text-white font-semibold text-sm tracking-widest uppercase transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                    </svg>
+                    Bayar Sekarang
+                </button>
+            </div>
+            @endif
+
+            <div class="w-full max-w-xs">
+                <button type="button" onclick="openLuxuryModal('{{ route('customer.reservations.cancel', $reservation) }}', 'PATCH', 'Batalkan Reservasi', 'Apakah Anda yakin ingin membatalkan reservasi ini? Tindakan ini tidak dapat diurungkan dan kamar akan kembali tersedia untuk pelanggan lain.', 'Batalkan Reservasi')" class="w-full py-3.5 flex items-center justify-center gap-2 shadow-sm bg-red-700 hover:bg-red-800 text-white font-semibold text-sm tracking-widest uppercase transition-colors border border-red-800">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                     </svg>
@@ -172,3 +186,33 @@
 
 
 @endsection
+
+@if($reservation->status === 'pending' && $reservation->snap_token && $reservation->payment_status === 'unpaid')
+    @push('scripts')
+    <script src="{{ config('midtrans.is_production') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var payButton = document.getElementById('pay-button');
+            if(payButton) {
+                payButton.onclick = function(){
+                    snap.pay('{{ $reservation->snap_token }}', {
+                        onSuccess: function(result){
+                            window.location.reload();
+                        },
+                        onPending: function(result){
+                            window.location.reload();
+                        },
+                        onError: function(result){
+                            alert('Pembayaran gagal atau dibatalkan.');
+                            window.location.reload();
+                        },
+                        onClose: function(){
+                            // Customer closed the popup without finishing the payment
+                        }
+                    });
+                };
+            }
+        });
+    </script>
+    @endpush
+@endif

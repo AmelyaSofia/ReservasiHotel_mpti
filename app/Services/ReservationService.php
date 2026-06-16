@@ -176,4 +176,35 @@ class ReservationService
 
         return $reservation->fresh();
     }
+
+    /**
+     * Generate Midtrans Snap Token
+     */
+    public function generateMidtransSnapToken(Reservation $reservation): void
+    {
+        // Set Midtrans configuration
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        \Midtrans\Config::$isProduction = config('midtrans.is_production');
+        \Midtrans\Config::$isSanitized = config('midtrans.is_sanitized');
+        \Midtrans\Config::$is3ds = config('midtrans.is_3ds');
+
+        $params = [
+            'transaction_details' => [
+                'order_id' => 'RES-' . $reservation->id . '-' . time(), // Append time to avoid duplicate order_id on retry
+                'gross_amount' => (int) $reservation->total_price,
+            ],
+            'customer_details' => [
+                'first_name' => $reservation->user->name,
+                'email' => $reservation->user->email,
+            ],
+        ];
+
+        try {
+            $snapToken = \Midtrans\Snap::getSnapToken($params);
+            $reservation->update(['snap_token' => $snapToken]);
+        } catch (\Exception $e) {
+            // Log the error or handle it as needed
+            \Illuminate\Support\Facades\Log::error('Midtrans Error: ' . $e->getMessage());
+        }
+    }
 }

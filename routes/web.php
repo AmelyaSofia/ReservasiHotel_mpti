@@ -86,3 +86,8 @@ Route::middleware(['auth', 'customer'])
         Route::get('/reservations/{reservation}',             [CustomerReservation::class, 'show'])->name('reservations.show');
         Route::patch('/reservations/{reservation}/cancel',    [CustomerReservation::class, 'cancel'])->name('reservations.cancel');
     });
+
+// ─── Webhook ────────────────────────────────────────────────────────────
+Route::post('/midtrans/callback', [\App\Http\Controllers\Api\MidtransController::class, 'callback'])
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class])
+    ->name('midtrans.callback');

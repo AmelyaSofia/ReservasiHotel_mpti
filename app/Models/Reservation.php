@@ -20,6 +20,8 @@ class Reservation extends Model
         'check_out_date',
         'total_price',
         'status',
+        'snap_token',
+        'payment_status',
     ];
 
     /**
