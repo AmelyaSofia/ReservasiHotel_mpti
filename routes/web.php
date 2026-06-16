@@ -13,13 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 // ─── Halaman Utama ─────────────────────────────────────────────────────────────
 Route::get('/', function () {
-    if (auth()->check()) {
-        return auth()->user()->isAdmin()
-            ? redirect()->route('admin.dashboard')
-            : redirect()->route('customer.dashboard');
-    }
-    return redirect()->route('login');
-});
+    $roomTypes = \App\Models\RoomType::with('rooms')->get();
+    $facilities = \App\Models\Facility::all();
+    return view('welcome', compact('roomTypes', 'facilities'));
+})->name('landing');
 
 // ─── Autentikasi (Tamu) ────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {

@@ -33,14 +33,14 @@
             {{-- Nav Links --}}
             <div class="hidden md:flex items-center gap-1">
                 @php
-                    $navLinks = [];
+                    $navLinks = [
+                        ['route' => 'landing', 'label' => 'Beranda', 'pattern' => 'landing'],
+                    ];
                     
                     if (auth()->check()) {
-                        if (auth()->user()->isCustomer()) {
-                            $navLinks[] = ['route' => 'customer.dashboard', 'label' => 'Beranda', 'pattern' => 'customer.dashboard'];
-                        }
                         $navLinks[] = ['route' => 'customer.catalog.index', 'label' => 'Kamar', 'pattern' => 'customer.catalog.*'];
                         if (auth()->user()->isCustomer()) {
+                            $navLinks[] = ['route' => 'customer.dashboard', 'label' => 'Dashboard', 'pattern' => 'customer.dashboard'];
                             $navLinks[] = ['route' => 'customer.reservations.index', 'label' => 'Reservasi Saya', 'pattern' => 'customer.reservations.*'];
                         }
                     } else {
@@ -136,7 +136,7 @@
 </div>
 @endif
 
-<main class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-10">
+<main class="w-full">
     @yield('content')
 </main>
 

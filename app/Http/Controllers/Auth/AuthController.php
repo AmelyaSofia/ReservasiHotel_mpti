@@ -64,10 +64,10 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): RedirectResponse
     {
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => $request->password,
-            'role'     => 'customer',
+            'role' => 'customer',
         ]);
 
         Auth::login($user);
@@ -90,7 +90,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')
+        return redirect()->route('landing')
             ->with('success', 'Anda telah berhasil keluar.');
     }
 }
