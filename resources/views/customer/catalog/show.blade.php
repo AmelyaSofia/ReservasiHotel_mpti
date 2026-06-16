@@ -104,9 +104,22 @@
                 <div class="flex justify-between items-center border-b border-[#F7F4EE] pb-2.5">
                     <span class="text-xs text-[#8C7B65] uppercase tracking-wider">Tarif Sewa</span>
                     <div class="text-right">
-                        <p class="text-xl font-bold text-[#B8935A] font-serif">
-                            Rp {{ number_format($room->roomType->price_per_night, 0, ',', '.') }}
-                        </p>
+                        @php
+                            $activeRate = $room->roomType->active_seasonal_rate;
+                        @endphp
+                        @if($activeRate)
+                            <p class="text-xs line-through text-[#A89880] mb-0.5">
+                                Rp {{ number_format($room->roomType->price_per_night, 0, ',', '.') }}
+                            </p>
+                            <p class="text-xl font-bold text-[#8C2323] font-serif flex items-center justify-end gap-2">
+                                <span class="bg-[#8C2323] text-white text-[9px] px-1.5 py-0.5 rounded uppercase tracking-widest font-sans font-normal">Promo</span>
+                                Rp {{ number_format($activeRate->price_per_night, 0, ',', '.') }}
+                            </p>
+                        @else
+                            <p class="text-xl font-bold text-[#B8935A] font-serif">
+                                Rp {{ number_format($room->roomType->price_per_night, 0, ',', '.') }}
+                            </p>
+                        @endif
                         <p class="text-[9px] text-[#A89880] tracking-widest uppercase mt-0.5">Per Malam</p>
                     </div>
                 </div>

@@ -56,6 +56,15 @@
             <span>Tipe Kamar</span>
         </a>
 
+        <a href="{{ route('admin.seasonal-rates.index') }}"
+           class="sidebar-link {{ request()->routeIs('admin.seasonal-rates.*') ? 'active' : '' }}">
+            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                <circle cx="12" cy="12" r="9"/>
+            </svg>
+            <span>Harga Dinamis</span>
+        </a>
+
         <a href="{{ route('admin.rooms.index') }}"
            class="sidebar-link {{ request()->routeIs('admin.rooms.*') ? 'active' : '' }}">
             <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">

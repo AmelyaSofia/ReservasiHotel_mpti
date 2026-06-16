@@ -61,6 +61,9 @@ Route::middleware(['auth', 'admin'])
         
         // Pelanggan
         Route::resource('customers', \App\Http\Controllers\Admin\CustomerController::class)->except(['show']);
+
+        // Harga Musiman / Dinamis
+        Route::resource('seasonal-rates', \App\Http\Controllers\Admin\SeasonalRateController::class);
     });
 
 // ─── Area Pelanggan ────────────────────────────────────────────────────────────

@@ -41,14 +41,35 @@ class ReservationService
 
     /**
      * Hitung total harga reservasi berdasarkan durasi dan harga per malam tipe kamar.
-     *
-     * total_price = (check_out_date - check_in_date) * room_type.price_per_night
+     * Termasuk pengecekan Harga Dinamis / Musiman (Seasonal Rates).
      */
     public function calculateTotalPrice(Room $room, Carbon $checkIn, Carbon $checkOut): float
     {
+        $totalPrice = 0;
+        $currentDate = $checkIn->copy();
+        
+        $roomType = $room->roomType;
+        // Ambil semua harga musiman untuk tipe kamar ini
+        $seasonalRates = $roomType->seasonalRates;
+
         $nights = $checkIn->diffInDays($checkOut);
 
-        return $nights * $room->roomType->price_per_night;
+        for ($i = 0; $i < $nights; $i++) {
+            $nightPrice = $roomType->price_per_night;
+
+            // Cek apakah ada harga khusus (seasonal rate) untuk tanggal ini
+            foreach ($seasonalRates as $rate) {
+                if ($currentDate->gte($rate->start_date) && $currentDate->lte($rate->end_date)) {
+                    $nightPrice = $rate->price_per_night;
+                    break; // Gunakan harga musiman pertama yang cocok
+                }
+            }
+
+            $totalPrice += $nightPrice;
+            $currentDate->addDay();
+        }
+
+        return $totalPrice;
     }
 
     /**

@@ -109,10 +109,23 @@
                     
                     {{-- Floating price tag --}}
                     <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm border border-[#EDE8DC] px-3.5 py-1.5 shadow-sm">
-                        <p class="text-xs text-[#8C7B65] tracking-widest uppercase leading-none">Mulai dari</p>
-                        <p class="text-sm font-semibold text-[#2A1D14] mt-1 leading-none">
-                            Rp {{ number_format($room->roomType->price_per_night, 0, ',', '.') }}<span class="text-[10px] text-[#A89880] font-normal font-sans">/malam</span>
-                        </p>
+                        <p class="text-[10px] text-[#8C7B65] tracking-widest uppercase leading-none mb-1">Mulai dari</p>
+                        @php
+                            $activeRate = $room->roomType->active_seasonal_rate;
+                        @endphp
+                        @if($activeRate)
+                            <p class="text-[11px] text-[#A89880] line-through leading-none mb-1">
+                                Rp {{ number_format($room->roomType->price_per_night, 0, ',', '.') }}
+                            </p>
+                            <p class="text-sm font-semibold text-[#8C2323] leading-none flex items-center gap-1">
+                                Rp {{ number_format($activeRate->price_per_night, 0, ',', '.') }}<span class="text-[10px] text-[#A89880] font-normal font-sans">/malam</span>
+                                <span class="bg-[#8C2323] text-white text-[8px] px-1 py-0.5 rounded uppercase tracking-wider font-sans">Promo</span>
+                            </p>
+                        @else
+                            <p class="text-sm font-semibold text-[#2A1D14] leading-none">
+                                Rp {{ number_format($room->roomType->price_per_night, 0, ',', '.') }}<span class="text-[10px] text-[#A89880] font-normal font-sans">/malam</span>
+                            </p>
+                        @endif
                     </div>
                 </div>
 

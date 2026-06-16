@@ -32,4 +32,24 @@ class RoomType extends Model
     {
         return $this->hasMany(Room::class);
     }
+
+    /**
+     * Satu tipe kamar memiliki banyak harga musiman.
+     */
+    public function seasonalRates(): HasMany
+    {
+        return $this->hasMany(SeasonalRate::class);
+    }
+
+    /**
+     * Dapatkan harga musiman yang aktif untuk hari ini (jika ada).
+     */
+    public function getActiveSeasonalRateAttribute()
+    {
+        $today = \Carbon\Carbon::today();
+        return $this->seasonalRates()
+            ->where('start_date', '<=', $today)
+            ->where('end_date', '>=', $today)
+            ->first();
+    }
 }
