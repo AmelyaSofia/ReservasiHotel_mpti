@@ -16,7 +16,7 @@
 </div>
 
 {{-- ════════════════════════ FACILITIES TABLE ════ --}}
-<div class="card-luxury overflow-hidden max-w-4xl">
+<div class="card-luxury overflow-hidden">
     <div class="px-6 py-5 border-b border-[#EDE8DC] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
             <p class="text-xs text-[#B8935A] tracking-widest uppercase mb-1">Daftar Fasilitas</p>

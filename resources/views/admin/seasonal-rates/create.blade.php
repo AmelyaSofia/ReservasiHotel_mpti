@@ -1,59 +1,102 @@
 @extends('layouts.admin')
 
 @section('title', 'Tambah Harga Dinamis')
-@section('page_title', 'Tambah Harga Dinamis')
-@section('breadcrumb', 'Manajemen Harga > Tambah')
+@section('page_title', 'Harga Dinamis')
+@section('breadcrumb', 'Master Data / Harga Dinamis / Tambah')
 
 @section('content')
-<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-[#EDE8DC] max-w-2xl mx-auto">
-    <div class="p-6 bg-white border-b border-[#EDE8DC]">
-        <form method="POST" action="{{ route('admin.seasonal-rates.store') }}">
-            @csrf
 
-            <div class="mb-4">
-                <label for="room_type_id" class="block text-sm font-medium text-[#2A1D14]">Tipe Kamar</label>
-                <select name="room_type_id" id="room_type_id" class="mt-1 block w-full border-[#EDE8DC] rounded-md shadow-sm focus:ring-[#B8935A] focus:border-[#B8935A] sm:text-sm" required>
-                    <option value="">-- Pilih Tipe Kamar --</option>
-                    @foreach($roomTypes as $rt)
-                        <option value="{{ $rt->id }}">{{ $rt->name }} (Normal: Rp {{ number_format($rt->price_per_night, 0, ',', '.') }})</option>
-                    @endforeach
-                </select>
-                @error('room_type_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                    <label for="start_date" class="block text-sm font-medium text-[#2A1D14]">Mulai Tanggal</label>
-                    <input type="date" name="start_date" id="start_date" class="mt-1 block w-full border-[#EDE8DC] rounded-md shadow-sm focus:ring-[#B8935A] focus:border-[#B8935A] sm:text-sm" required>
-                    @error('start_date') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                </div>
-                <div>
-                    <label for="end_date" class="block text-sm font-medium text-[#2A1D14]">Sampai Tanggal</label>
-                    <input type="date" name="end_date" id="end_date" class="mt-1 block w-full border-[#EDE8DC] rounded-md shadow-sm focus:ring-[#B8935A] focus:border-[#B8935A] sm:text-sm" required>
-                    @error('end_date') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <label for="price_per_night" class="block text-sm font-medium text-[#2A1D14]">Harga per Malam Baru (Rp)</label>
-                <input type="number" name="price_per_night" id="price_per_night" class="mt-1 block w-full border-[#EDE8DC] rounded-md shadow-sm focus:ring-[#B8935A] focus:border-[#B8935A] sm:text-sm" placeholder="Contoh: 300000" required>
-                <p class="text-xs text-gray-500 mt-1">Harga ini akan menggantikan harga normal kamar pada rentang tanggal di atas.</p>
-                @error('price_per_night') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-            </div>
-
-            <div class="mb-6">
-                <label for="description" class="block text-sm font-medium text-[#2A1D14]">Keterangan (Opsional)</label>
-                <input type="text" name="description" id="description" class="mt-1 block w-full border-[#EDE8DC] rounded-md shadow-sm focus:ring-[#B8935A] focus:border-[#B8935A] sm:text-sm" placeholder="Misal: Promo Akhir Tahun / Low Season">
-                @error('description') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-            </div>
-
-            <div class="flex items-center justify-end">
-                <a href="{{ route('admin.seasonal-rates.index') }}" class="text-sm text-gray-600 hover:text-gray-900 mr-4">Batal</a>
-                <button type="submit" class="inline-flex items-center px-4 py-2 bg-[#2A1D14] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-[#1A1510] active:bg-[#1A1510] focus:outline-none focus:border-[#1A1510] focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-                    Simpan Harga
-                </button>
-            </div>
-        </form>
+{{-- ════════════════════════ PAGE HEADER ════ --}}
+<div class="mb-8">
+    <div class="flex items-center gap-2 mb-2">
+        <a href="{{ route('admin.seasonal-rates.index') }}" class="text-xs text-[#8C7B65] hover:text-[#2A1D14] tracking-widest uppercase transition-colors">
+            Harga Dinamis
+        </a>
+        <span class="text-xs text-[#A89880]">&gt;</span>
+        <span class="text-xs text-[#B8935A] tracking-widest uppercase">Tambah Baru</span>
     </div>
+    <h2 class="text-2xl font-light text-[#2A1D14]" style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.02em;">
+        Tambah Harga Dinamis Baru
+    </h2>
+    <div class="gold-line mt-3"></div>
+</div>
+
+{{-- ════════════════════════ FORM CONTAINER ════ --}}
+<div class="card-luxury p-6 sm:p-8 max-w-2xl">
+    <p class="text-xs text-[#B8935A] tracking-widest uppercase border-b border-[#EDE8DC] pb-3 mb-6 font-semibold">
+        Informasi Harga Musiman
+    </p>
+
+    <form method="POST" action="{{ route('admin.seasonal-rates.store') }}" class="space-y-6">
+        @csrf
+
+        <div>
+            <label for="room_type_id" class="form-label">Tipe Kamar <span class="text-red-700">*</span></label>
+            <select name="room_type_id" id="room_type_id" required
+                    class="form-input-box @error('room_type_id') border-red-500 @enderror">
+                <option value="">— Pilih Tipe Kamar —</option>
+                @foreach($roomTypes as $rt)
+                    <option value="{{ $rt->id }}" {{ old('room_type_id') == $rt->id ? 'selected' : '' }}>
+                        {{ $rt->name }} (Normal: Rp {{ number_format($rt->price_per_night, 0, ',', '.') }})
+                    </option>
+                @endforeach
+            </select>
+            @error('room_type_id')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+                <label for="start_date" class="form-label">Mulai Tanggal <span class="text-red-700">*</span></label>
+                <input type="date" name="start_date" id="start_date" value="{{ old('start_date') }}" required
+                       class="form-input-box @error('start_date') border-red-500 @enderror">
+                @error('start_date')
+                    <p class="form-error">{{ $message }}</p>
+                @enderror
+            </div>
+            <div>
+                <label for="end_date" class="form-label">Sampai Tanggal <span class="text-red-700">*</span></label>
+                <input type="date" name="end_date" id="end_date" value="{{ old('end_date') }}" required
+                       class="form-input-box @error('end_date') border-red-500 @enderror">
+                @error('end_date')
+                    <p class="form-error">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+
+        <div>
+            <label for="price_per_night" class="form-label">Harga Per Malam Baru <span class="text-red-700">*</span></label>
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-xs text-[#8C7B65] font-semibold">Rp</span>
+                <input type="number" name="price_per_night" id="price_per_night" value="{{ old('price_per_night') }}" required min="0" step="1000"
+                       class="form-input-box pl-10 @error('price_per_night') border-red-500 @enderror"
+                       placeholder="Contoh: 300000">
+            </div>
+            <p class="text-xs text-[#A89880] mt-1.5">Harga ini akan menggantikan harga normal kamar pada rentang tanggal di atas.</p>
+            @error('price_per_night')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="description" class="form-label">Keterangan <span class="text-xs text-[#8C7B65] font-normal tracking-normal">(Opsional)</span></label>
+            <input type="text" name="description" id="description" value="{{ old('description') }}"
+                   class="form-input-box @error('description') border-red-500 @enderror"
+                   placeholder="Misal: Promo Akhir Tahun / Low Season / Libur Lebaran">
+            @error('description')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="pt-4 border-t border-[#EDE8DC] flex items-center gap-3">
+            <button type="submit" class="btn-primary py-2.5 px-6">
+                Simpan Harga
+            </button>
+            <a href="{{ route('admin.seasonal-rates.index') }}" class="btn-outline py-2.5 px-6">
+                Batal
+            </a>
+        </div>
+    </form>
 </div>
 @endsection

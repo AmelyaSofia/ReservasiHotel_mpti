@@ -101,8 +101,17 @@
                         </span>
                     </div>
                     <div>
-                        <p class="text-xs text-[#8C7B65] tracking-widest sm:text-right">Total Biaya</p>
-                        <p class="text-sm font-semibold text-[#2A1D14] mt-0.5 sm:text-right">
+                        @php
+                            $pricePerNight = $reservasi->nights > 0 ? $reservasi->total_price / $reservasi->nights : 0;
+                            $isPromo = $pricePerNight < $reservasi->room->roomType->price_per_night;
+                        @endphp
+                        <div class="flex items-center justify-start sm:justify-end gap-1.5 mb-0.5">
+                            <p class="text-xs text-[#8C7B65] tracking-widest">Total Biaya</p>
+                            @if($isPromo)
+                                <span class="bg-[#8C2323] text-white text-[8px] px-1 py-0.5 rounded uppercase tracking-wider font-sans font-normal">Promo</span>
+                            @endif
+                        </div>
+                        <p class="text-sm font-semibold text-[#2A1D14] sm:text-right">
                             Rp {{ number_format($reservasi->total_price, 0, ',', '.') }}
                         </p>
                     </div>

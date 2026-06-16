@@ -122,14 +122,28 @@
 
             {{-- Total Cost & Payment terms --}}
             <div class="border-t border-[#EDE8DC] pt-6 bg-[#FDFCF8] border border-[#EDE8DC] p-6 space-y-4">
+                @php
+                    $pricePerNight = $reservation->nights > 0 ? $reservation->total_price / $reservation->nights : 0;
+                    $isPromo = $pricePerNight < $reservation->room->roomType->price_per_night;
+                @endphp
                 <div class="flex justify-between items-center">
                     <div>
-                        <p class="text-[10px] text-[#8C7B65] uppercase tracking-widest font-semibold">Total Biaya</p>
+                        <div class="flex items-center gap-2">
+                            <p class="text-[10px] text-[#8C7B65] uppercase tracking-widest font-semibold">Total Biaya</p>
+                            @if($isPromo)
+                                <span class="bg-[#8C2323] text-white text-[8px] px-1.5 py-0.5 rounded uppercase tracking-wider font-sans font-normal">Harga Promo</span>
+                            @endif
+                        </div>
                         <p class="text-[10px] text-[#A89880] mt-0.5">Sudah termasuk pajak & biaya layanan</p>
                     </div>
-                    <span class="text-xl font-bold text-[#B8935A] font-serif">
-                        Rp {{ number_format($reservation->total_price, 0, ',', '.') }}
-                    </span>
+                    <div class="text-right">
+                        @if($isPromo)
+                            <p class="text-[10px] text-[#A89880] line-through mb-0.5">Rp {{ number_format($reservation->room->roomType->price_per_night * $reservation->nights, 0, ',', '.') }}</p>
+                        @endif
+                        <span class="text-xl font-bold text-[#B8935A] font-serif">
+                            Rp {{ number_format($reservation->total_price, 0, ',', '.') }}
+                        </span>
+                    </div>
                 </div>
                 
                 <div class="border-t border-[#EDE8DC] pt-3.5 flex items-start gap-2.5 text-xs text-[#8C7B65] leading-relaxed">

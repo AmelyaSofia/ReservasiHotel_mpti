@@ -24,6 +24,11 @@
 </div>
 
 {{-- ════════════════════════ RESERVATION GRID ════ --}}
+@php
+    $seasonalRates = $room->roomType->seasonalRates()->where('end_date', '>=', now()->startOfDay())->get();
+    $activeRate = $room->roomType->active_seasonal_rate;
+    $currentPrice = $activeRate ? $activeRate->price_per_night : $room->roomType->price_per_night;
+@endphp
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     
     {{-- LEFT COLUMN: RESERVATION FORM (2/3 width) --}}
@@ -32,6 +37,27 @@
             <p class="text-xs text-[#B8935A] tracking-widest uppercase border-b border-[#EDE8DC] pb-3 mb-4 font-semibold">
                 Formulir Reservasi
             </p>
+
+            @if($seasonalRates->count() > 0)
+                <div class="bg-[#FDFCF8] border border-[#F7EAC7] p-4 space-y-2 mb-6">
+                    <div class="flex items-center gap-2 text-[#8C2323] font-semibold text-[10px] tracking-widest uppercase">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                        </svg>
+                        Informasi Promo & Harga Spesial
+                    </div>
+                    <p class="text-xs text-[#8C7B65]">Tipe kamar ini memiliki penyesuaian harga khusus pada periode berikut:</p>
+                    <ul class="list-disc list-inside text-xs text-[#5C4033] space-y-1 ml-1 mt-2">
+                        @foreach($seasonalRates as $rate)
+                            <li>
+                                <strong>{{ $rate->description ?: 'Harga Musiman' }}</strong>: 
+                                Rp {{ number_format($rate->price_per_night, 0, ',', '.') }} / malam 
+                                <span class="text-[#A89880]">({{ $rate->start_date->format('d M Y') }} &mdash; {{ $rate->end_date->format('d M Y') }})</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <form action="{{ route('customer.reservations.store') }}" method="POST" id="reservationForm">
                 @csrf
@@ -74,7 +100,9 @@
                     </div>
                     <div class="flex justify-between items-center text-xs text-[#8C7B65]">
                         <span>Harga Kamar:</span>
-                        <span class="font-bold text-[#2A1D14]">Rp {{ number_format($room->roomType->price_per_night, 0, ',', '.') }} / malam</span>
+                        <div class="text-right">
+                            <span class="font-bold text-[#2A1D14]">Rp {{ number_format($room->roomType->price_per_night, 0, ',', '.') }} / malam</span>
+                        </div>
                     </div>
                     <div class="h-px bg-[#DDD5C5] my-2"></div>
                     <div class="flex justify-between items-center">
@@ -131,7 +159,17 @@
                     </div>
                     <div class="flex justify-between text-xs text-[#8C7B65]">
                         <span>Tarif per malam:</span>
-                        <span class="font-bold text-[#B8935A]">Rp {{ number_format($room->roomType->price_per_night, 0, ',', '.') }}</span>
+                        <div class="text-right">
+                            @if($activeRate)
+                                <p class="text-[9px] text-[#A89880] line-through mb-0.5">Rp {{ number_format($room->roomType->price_per_night, 0, ',', '.') }}</p>
+                                <p class="font-bold text-[#8C2323] flex items-center gap-1 justify-end">
+                                    <span class="bg-[#8C2323] text-white text-[8px] px-1 py-0.5 rounded uppercase tracking-wider font-sans font-normal">Promo</span>
+                                    Rp {{ number_format($currentPrice, 0, ',', '.') }}
+                                </p>
+                            @else
+                                <span class="font-bold text-[#B8935A]">Rp {{ number_format($room->roomType->price_per_night, 0, ',', '.') }}</span>
+                            @endif
+                        </div>
                     </div>
                 </div>
 
@@ -153,7 +191,14 @@
 
 {{-- ════════════════════════ CALCULATOR SCRIPT ════ --}}
 <script>
-const pricePerNight = {{ $room->roomType->price_per_night }};
+const basePrice = {{ $room->roomType->price_per_night }};
+const seasonalRates = @json($seasonalRates->map(function($rate) {
+    return [
+        'start' => $rate->start_date->format('Y-m-d'),
+        'end' => $rate->end_date->format('Y-m-d'),
+        'price' => (int) $rate->price_per_night
+    ];
+}));
 
 function calculatePrice() {
     const inVal = document.getElementById('check_in_date').value;
@@ -191,9 +236,28 @@ function calculatePrice() {
         submitBtn.disabled = false;
         submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
         
-        stayNightsText.innerText = daysDiff + " Malam";
+        let totalCost = 0;
+        let currentDate = new Date(checkIn);
         
-        const totalCost = daysDiff * pricePerNight;
+        for (let i = 0; i < daysDiff; i++) {
+            let dayPrice = basePrice;
+            
+            // Check if current day falls into any seasonal rate
+            for (let rate of seasonalRates) {
+                let rs = new Date(rate.start); rs.setHours(0,0,0,0);
+                let re = new Date(rate.end); re.setHours(0,0,0,0);
+                if (currentDate >= rs && currentDate <= re) {
+                    dayPrice = rate.price;
+                    break;
+                }
+            }
+            totalCost += dayPrice;
+            
+            // Move to next day
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        
+        stayNightsText.innerText = daysDiff + " Malam";
         totalCostText.innerText = "Rp " + totalCost.toLocaleString('id-ID');
     }
 }
