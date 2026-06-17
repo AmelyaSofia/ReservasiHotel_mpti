@@ -44,7 +44,12 @@ class ReservationController extends Controller
 
         $room->load(['roomType', 'facilities']);
 
-        return view('customer.reservations.create', compact('room'));
+        $bookedDates = $room->reservations()
+            ->whereNotIn('status', ['cancelled'])
+            ->where('check_out_date', '>', now())
+            ->get(['check_in_date', 'check_out_date']);
+
+        return view('customer.reservations.create', compact('room', 'bookedDates'));
     }
 
     /**

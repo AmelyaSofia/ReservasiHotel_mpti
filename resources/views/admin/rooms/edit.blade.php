@@ -160,7 +160,7 @@
                                   file:bg-[#EDE8DC] file:text-[#5C4033]
                                   hover:file:bg-[#DDD5C5] transition-colors"
                            onchange="previewFile()">
-                    <p class="text-[10px] text-[#A89880] mt-1">Biarkan kosong jika tidak ingin mengubah foto kamar saat ini.</p>
+                    <p class="mt-2 text-[10px] text-[#A89880]">Format: JPEG, PNG, JPG, Webp. Maksimal 5MB.</p>
                     @error('image')
                         <p class="form-error">{{ $message }}</p>
                     @enderror

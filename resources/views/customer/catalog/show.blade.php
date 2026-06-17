@@ -132,8 +132,14 @@
                     <span class="text-sm font-semibold text-[#2A1D14]">King/Twin Size</span>
                 </div>
                 <div class="flex justify-between items-center pb-1">
-                    <span class="text-xs text-[#8C7B65] uppercase tracking-wider">Status Kamar</span>
-                    <span class="text-xs font-bold text-emerald-700 tracking-wider uppercase bg-emerald-50 border border-emerald-200 px-2 py-0.5">Tersedia</span>
+                    <span class="text-xs text-[#8C7B65] uppercase tracking-wider">Status Kamar Saat Ini</span>
+                    @if($room->status === 'available')
+                        <span class="text-xs font-bold text-emerald-700 tracking-wider uppercase bg-emerald-50 border border-emerald-200 px-2 py-0.5">Tersedia</span>
+                    @elseif($room->status === 'occupied')
+                        <span class="text-xs font-bold text-amber-700 tracking-wider uppercase bg-amber-50 border border-amber-200 px-2 py-0.5">Sedang Dipakai</span>
+                    @else
+                        <span class="text-xs font-bold text-rose-700 tracking-wider uppercase bg-rose-50 border border-rose-200 px-2 py-0.5">Maintenance</span>
+                    @endif
                 </div>
             </div>
 

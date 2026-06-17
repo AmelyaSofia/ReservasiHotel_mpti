@@ -17,7 +17,7 @@ class RoomCatalogController extends Controller
     public function index(Request $request): View
     {
         $query = Room::with(['roomType', 'facilities'])
-            ->where('status', 'available');
+            ->where('status', '!=', 'maintenance');
 
         // Filter berdasarkan tipe kamar
         if ($request->filled('room_type_id')) {

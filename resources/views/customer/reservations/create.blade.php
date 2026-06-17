@@ -38,7 +38,7 @@
                 Formulir Reservasi
             </p>
 
-            @if($seasonalRates->count() > 0)
+        @if($seasonalRates->count() > 0)
                 <div class="bg-[#FDFCF8] border border-[#F7EAC7] p-4 space-y-2 mb-6">
                     <div class="flex items-center gap-2 text-[#8C2323] font-semibold text-[10px] tracking-widest uppercase">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -53,6 +53,25 @@
                                 <strong>{{ $rate->description ?: 'Harga Musiman' }}</strong>: 
                                 Rp {{ number_format($rate->price_per_night, 0, ',', '.') }} / malam 
                                 <span class="text-[#A89880]">({{ $rate->start_date->format('d M Y') }} &mdash; {{ $rate->end_date->format('d M Y') }})</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            @if(isset($bookedDates) && $bookedDates->count() > 0)
+                <div class="bg-[#FFF4F4] border border-[#F7C7C7] p-4 space-y-2 mb-6">
+                    <div class="flex items-center gap-2 text-[#8C2323] font-semibold text-[10px] tracking-widest uppercase">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Tanggal Tidak Tersedia (Penuh)
+                    </div>
+                    <p class="text-xs text-[#8C7B65]">Kamar ini sudah dipesan pada rentang tanggal berikut:</p>
+                    <ul class="list-disc list-inside text-xs text-[#8C2323] space-y-1 ml-1 mt-2">
+                        @foreach($bookedDates as $bDate)
+                            <li>
+                                {{ \Carbon\Carbon::parse($bDate->check_in_date)->format('d M Y') }} &mdash; {{ \Carbon\Carbon::parse($bDate->check_out_date)->format('d M Y') }}
                             </li>
                         @endforeach
                     </ul>
@@ -199,6 +218,12 @@ const seasonalRates = @json($seasonalRates->map(function($rate) {
         'price' => (int) $rate->price_per_night
     ];
 }));
+const bookedDates = @json(isset($bookedDates) ? $bookedDates->map(function($date) {
+    return [
+        'start' => \Carbon\Carbon::parse($date->check_in_date)->format('Y-m-d'),
+        'end' => \Carbon\Carbon::parse($date->check_out_date)->format('Y-m-d')
+    ];
+}) : []);
 
 function calculatePrice() {
     const inVal = document.getElementById('check_in_date').value;
@@ -230,36 +255,60 @@ function calculatePrice() {
         totalCostText.innerText = "Rp 0";
         submitBtn.disabled = true;
         submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-    } else {
-        // Correct dates
-        dateWarning.classList.add('hidden');
-        submitBtn.disabled = false;
-        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        return;
+    } 
+    
+    // Check for overlap with booked dates
+    let hasOverlap = false;
+    for (let b of bookedDates) {
+        let bStart = new Date(b.start); bStart.setHours(0,0,0,0);
+        let bEnd = new Date(b.end); bEnd.setHours(0,0,0,0);
         
-        let totalCost = 0;
-        let currentDate = new Date(checkIn);
-        
-        for (let i = 0; i < daysDiff; i++) {
-            let dayPrice = basePrice;
-            
-            // Check if current day falls into any seasonal rate
-            for (let rate of seasonalRates) {
-                let rs = new Date(rate.start); rs.setHours(0,0,0,0);
-                let re = new Date(rate.end); re.setHours(0,0,0,0);
-                if (currentDate >= rs && currentDate <= re) {
-                    dayPrice = rate.price;
-                    break;
-                }
-            }
-            totalCost += dayPrice;
-            
-            // Move to next day
-            currentDate.setDate(currentDate.getDate() + 1);
+        // Overlap condition: checkIn < bEnd AND checkOut > bStart
+        if (checkIn < bEnd && checkOut > bStart) {
+            hasOverlap = true;
+            break;
         }
-        
-        stayNightsText.innerText = daysDiff + " Malam";
-        totalCostText.innerText = "Rp " + totalCost.toLocaleString('id-ID');
     }
+
+    if (hasOverlap) {
+        dateWarning.innerText = "Kamar sudah penuh pada rentang tanggal yang dipilih. Silakan pilih tanggal lain.";
+        dateWarning.classList.remove('hidden');
+        stayNightsText.innerText = "-";
+        totalCostText.innerText = "Rp 0";
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        return;
+    }
+
+    // Correct dates and available
+    dateWarning.classList.add('hidden');
+    submitBtn.disabled = false;
+    submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+    
+    let totalCost = 0;
+    let currentDate = new Date(checkIn);
+    
+    for (let i = 0; i < daysDiff; i++) {
+        let dayPrice = basePrice;
+        
+        // Check if current day falls into any seasonal rate
+        for (let rate of seasonalRates) {
+            let rs = new Date(rate.start); rs.setHours(0,0,0,0);
+            let re = new Date(rate.end); re.setHours(0,0,0,0);
+            if (currentDate >= rs && currentDate <= re) {
+                dayPrice = rate.price;
+                break;
+            }
+        }
+        totalCost += dayPrice;
+        
+        // Move to next day
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    stayNightsText.innerText = daysDiff + " Malam";
+    totalCostText.innerText = "Rp " + totalCost.toLocaleString('id-ID');
 }
 
 // Trigger initial calculation

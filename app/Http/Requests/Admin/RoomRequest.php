@@ -20,7 +20,7 @@ class RoomRequest extends FormRequest
             'capacity'     => ['required', 'integer', 'min:1'],
             'status'       => ['required', 'in:available,occupied,maintenance'],
             'description'  => ['required', 'string'],
-            'image'        => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'image'        => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
             'facilities'   => ['nullable', 'array'],
             'facilities.*' => ['integer', 'exists:facilities,id'],
         ];
@@ -41,7 +41,7 @@ class RoomRequest extends FormRequest
             'description.required'  => 'Deskripsi kamar wajib diisi.',
             'image.image'           => 'File harus berupa gambar.',
             'image.mimes'           => 'Format gambar harus jpeg, png, jpg, atau webp.',
-            'image.max'             => 'Ukuran gambar maksimal 2 MB.',
+            'image.max'             => 'Ukuran gambar maksimal 5 MB.',
             'facilities.*.exists'   => 'Fasilitas yang dipilih tidak ditemukan.',
         ];
     }
